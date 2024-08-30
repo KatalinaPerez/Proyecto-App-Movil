@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
   ingresar(){
     if(this.validateModel(this.login)){
       this.router.navigate(['/home']);//*si es exitoso redirige a home
-      this.presentToast("top","Bienvenido",5000)
+      this.presentToast("top","Bienvenido",2000)
     }else{
       this.presentToast("middle","Error - Falta: "+this.field);//Mensaje de error
     }    
@@ -49,6 +49,7 @@ export class LoginPage implements OnInit {
       message: msg,
       duration: duration?duration:2500,
       position: position,
+      
     });
 
     await toast.present();

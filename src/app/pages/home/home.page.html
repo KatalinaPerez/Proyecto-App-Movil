@@ -1,19 +1,22 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-menu contentId="main-content" class="dark-theme">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blanck</ion-title>
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding dark-theme">Proximamente opciones aquí.</ion-content>
+</ion-menu>
+
+<div class="ion-page dark-theme" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    hola
-  </div>
-</ion-content>
+
+  <ion-content class="ion-padding"> Pr0nto más info aquí </ion-content>
+</div>

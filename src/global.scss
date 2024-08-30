@@ -35,3 +35,19 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+.dark-theme {
+    --background: black;
+    color: white;
+  }
+  
+  .dark-theme ion-button {
+    --background: purple;
+    --color: white;
+  }
+  
+  .dark-theme ion-header, .dark-theme ion-toolbar, .dark-theme ion-title, .dark-theme ion-card, .dark-theme ion-item, .dark-theme ion-content {
+    --background: black;
+    --color: white;
+  }
+  

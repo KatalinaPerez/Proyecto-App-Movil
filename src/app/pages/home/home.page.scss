@@ -25,3 +25,25 @@
 #container a {
   text-decoration: none;
 }
+
+@keyframes colorChange {
+  0% {
+    color: #e2f105; /* Amarillo */
+  }
+  25% {
+    color: #f542dd; /* Rosado */
+  }
+  50% {
+    color: #42a1f5; /* Azul */
+  }
+  75% {
+    color: #42f57e; /* Verde */
+  }
+  100% {
+    color: #e2f105; /* Amarillo (vuelve al inicio) */
+  }
+}
+
+ion-menu-button {
+  animation: colorChange 4s infinite; /* Cambia cada 4 segundos */
+}
