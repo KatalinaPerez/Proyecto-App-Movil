@@ -4,7 +4,8 @@
       <ion-title>Menu Content</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding dark-theme">Proximamente opciones aquí.</ion-content>
+  <ion-content class="ion-padding dark-theme"> PRONTO:::
+  </ion-content>
 </ion-menu>
 
 <div class="ion-page dark-theme" id="main-content">
@@ -18,5 +19,43 @@
   </ion-header>
 
 
-  <ion-content class="ion-padding"> Pr0nto más info aquí </ion-content>
+  <ion-content class="ion-padding ">
+    <div>
+      <h1> Top 10 Artistas</h1>
+    </div>
+    <div class="card-container">
+      <ion-card *ngFor="let card of cards">
+        <img [src]="card.image" />
+        <ion-card-header>
+          <ion-card-title>{{ card.title }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </ion-content>
+  <ion-content class="ion-padding dark-theme">
+    <div>
+      <h1> Top 10 Albumes </h1>
+    </div>
+    <div class="card-container">
+      <ion-card *ngFor="let card of cards">
+        <img [src]="card.image" />
+        <ion-card-header>
+          <ion-card-title>{{ card.title }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </ion-content>
+  <ion-content class="ion-padding dark-theme">
+    <div>
+      <h1> Undergrownd </h1>
+    </div>
+    <div class="card-container">
+      <ion-card *ngFor="let card of cards">
+        <img [src]="card.image" />
+        <ion-card-header>
+          <ion-card-title>{{ card.title }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </ion-content>
 </div>

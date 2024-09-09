@@ -39,3 +39,18 @@ ion-slide img {
   height: 100%;
   object-fit: cover;
 }
+
+.card-container {
+  display: flex;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  padding: 1rem;
+}
+
+ion-card {
+  min-width: 80%; /* Ajusta el tamaño de las cards */
+  margin-right: 1rem; /* Añade un espacio entre las cards */
+}
+
+ion-card img {
+  width: 100%; /* Asegúrate de que las imágenes ocupen todo el ancho de la card */
+}
