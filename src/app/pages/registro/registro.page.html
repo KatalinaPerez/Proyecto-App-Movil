@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="dark-theme">
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Registro de usuario</ion-card-subtitle>
@@ -18,8 +18,8 @@
           <ion-icon slot="icon-only" [name]="ojo" aria-hidden="true"></ion-icon>
         </ion-button>
       </ion-input>
-      <ion-input label="Confirme Contraseña" label-placement="floating" [type]="contrasenaConf" fill="outline" placeholder="Ingrese contraseña" 
-      helperText="Vuelva a escribir su cntraseña" errorText="Contraseña inválida">
+      <ion-input label="Confirme Contraseña" label-placement="floating" [type]="contrasenaConf" fill="outline" placeholder="Vuelva a escribir su contraseña" 
+      helperText="Escribir su contraseña" errorText="Contraseña inválida">
         <ion-button fill="clear" slot="end" (click)="visibilidadContrasenaConf()" aria-label="Show/hide">
           <ion-icon slot="icon-only" [name]="ojoConf" aria-hidden="true"></ion-icon>
         </ion-button>
