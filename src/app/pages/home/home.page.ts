@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 
 export class HomePage {
   cards = [
-    { title: 'Card 1', image: 'assets/img/card1.jpg' },
-    { title: 'Card 2', image: 'assets/img/card2.jpg' },
-    { title: 'Card 3', image: 'assets/img/card3.jpg' },
-    { title: 'Card 4', image: 'assets/img/card4.jpg' },
-    { title: 'Card 5', image: 'assets/img/card5.jpg' },
+    { type: 'album', title: 'Chemtrails Over The Country Club', image: 'assets/imagenes/COCC-Lana-Del-Rey.jpg', artist: 'Lana del Rey' },
+    { type: 'album', title: 'Born To Die', image: 'assets/imagenes/Lana-Del-Rey-Born-To-Die-album.jpg', artist: 'Lana del Rey' },
+    { type: 'album', title: 'Honeymoon', image: 'assets/imagenes/lana-del-rey-honeymoon.jpg', artist: 'Lana del Rey' },
+    { type: 'album', title: 'Lust For Life', image: 'assets/imagenes/LANA-DEL-REY-LustForLife.jpeg', artist: 'Lana del Rey' },
+    { type: 'album', title: 'Norman Fucking Rockwell', image: 'assets/imagenes/NFR-Lana-Del_Rey.webp', artist: 'Lana del Rey' },
   ];
 }
