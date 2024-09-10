@@ -27,20 +27,21 @@
         <img [src]="card.image" />
         <ion-card-header>
           <ion-card-title>{{ card.title }}</ion-card-title>
+          <ion-card-subtitle>{{ card.artist }} </ion-card-subtitle>
         </ion-card-header>
       </ion-card>
     </div>
-    <div>
-      <h1> Top 10 Albumes</h1>
-    </div>
-    <div class="card-container">
-      <ion-card *ngFor="let card of cards">
-        <img [src]="card.image" />
-        <ion-card-header>
-          <ion-card-title>{{ card.title }}</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-    </div>
+      <div>
+        <h1> Top 10 Albumes</h1>
+      </div>
+      <div class="card-container">
+        <ion-card *ngFor="let card of cards">
+          <img [src]="card.image" />
+          <ion-card-header>
+            <ion-card-title>{{ card.title }}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </div>
     <div>
       <h1> Top 10 Canciones</h1>
     </div>
@@ -53,7 +54,7 @@
       </ion-card>
     </div>
     <div>
-      <h1> Undergrownd</h1>
+      <h1> Undergrownd</h1> 
     </div>
     <div class="card-container">
       <ion-card *ngFor="let card of cards">
