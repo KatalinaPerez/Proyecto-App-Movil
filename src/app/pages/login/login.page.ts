@@ -29,6 +29,10 @@ export class LoginPage implements OnInit {
     }    
   }
 
+  inRegistro(){
+    this.router.navigate(['/registro']);
+  }
+
   //validateModel para validar el ingreso de algo en los campos de mi html mediante el modelo login
   validateModel(model:any){
     //Recorro todas las entradas que me entrega el Object entries obteniendo
