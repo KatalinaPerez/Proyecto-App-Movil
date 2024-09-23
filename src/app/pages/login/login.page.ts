@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/home']);//*si es exitoso redirige a home
       this.presentToast("top","Bienvenido",2000)
     }else{
-      this.presentToast("middle","Error - Falta: "+this.field);//Mensaje de error
+      this.presentToast("middle","Falta: "+this.field);//Mensaje de error
     }    
   }
 
