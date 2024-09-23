@@ -11,19 +11,26 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-input label="Nombre Usuario" label-placement="floating" fill="outline" placeholder="Ingrese su nombre"></ion-input>
-      <ion-input label="Correo electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su correo electrónico"></ion-input>
-      <ion-input label="Contraseña" label-placement="floating" [type]="contrasena" fill="outline" placeholder="Ingrese su contraseña">
+      <ion-input label="Nombre Usuario" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="registro.NombreUsuario"></ion-input>
+      <br>
+      <ion-input label="Correo electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su correo electrónico" [(ngModel)]="registro.correo"></ion-input>
+      <br>
+      <ion-input label="Contraseña" label-placement="floating" [type]="contrasena" fill="outline" placeholder="Ingrese su contraseña" [(ngModel)]="registro.contrasena">
         <ion-button fill="clear" slot="end" (click)="visibilidadContrasena()" aria-label="Show/hide">
           <ion-icon slot="icon-only" [name]="ojo" aria-hidden="true"></ion-icon>
         </ion-button>
       </ion-input>
-      <ion-input label="Confirme Contraseña" label-placement="floating" [type]="contrasenaConf" fill="outline" placeholder="Vuelva a escribir su contraseña" 
-      helperText="Escribir su contraseña" errorText="Contraseña inválida">
+      <br>
+      <ion-input label="Confirme Contraseña" label-placement="floating" [type]="contrasenaConf" fill="outline" placeholder="Vuelva a escribir su contraseña" [(ngModel)]="registro.confcontrasena"
+        helperText="Escribe tu contraseña"
+        errorText="Las contraseñas no coinciden">
         <ion-button fill="clear" slot="end" (click)="visibilidadContrasenaConf()" aria-label="Show/hide">
           <ion-icon slot="icon-only" [name]="ojoConf" aria-hidden="true"></ion-icon>
         </ion-button>
       </ion-input>
     </ion-card-content>
+    <ion-item>
+      <ion-button expand="block" (click)="inhome()" class="animated-button">Registrarse</ion-button>
+    </ion-item>
   </ion-card>
 </ion-content>
