@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { Router, ActivatedRoute} from '@angular/router';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,14 @@ export class LoginPage implements OnInit {
   }
   //variable para obtener el nombre del campo vacío
   field:string="";
-  constructor(public router: Router, public toastController: ToastController) { }
+  constructor(public router: Router, public toastController: ToastController, public alertContoller:AlertController, private activatedRoute: ActivatedRoute) { 
+    this.activatedRoute.queryParams.subscribe(params =>{
+      if (this.router.getCurrentNavigation()?.extras.state){
+        this.login=this.router.getCurrentNavigation()?.extras?.state?.['login'];
+        console.log(this.login)
+      }
+    });
+  }
 
   ngOnInit() {
   }
@@ -23,7 +30,7 @@ export class LoginPage implements OnInit {
   ingresar(){
     if(this.validateModel(this.login)){
       this.router.navigate(['/home']);//*si es exitoso redirige a home
-      this.presentToast("top","Bienvenido",2000)
+      this.presentToast("top","Bienvenido "+ this.login.usuario,2000)
     }else{
       this.presentToast("middle","Falta: "+this.field);//Mensaje de error
     }    
