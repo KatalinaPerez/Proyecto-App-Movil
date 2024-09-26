@@ -39,7 +39,7 @@ export class RegistroPage implements OnInit {
       this.router.navigate(['/home']);
       this.presentToast("top","Bienvenido",2000)
     }else{
-      this.presentToast("middle","Error - Falta: "+this.field);//Mensaje de error
+      this.presentToast("middle","Falta "+this.field);//Mensaje de error
     }
   }
 
