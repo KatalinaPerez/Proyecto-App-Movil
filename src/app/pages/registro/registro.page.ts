@@ -35,11 +35,19 @@ export class RegistroPage implements OnInit {
   }
 
   inhome(){
-    if(this.validateModel(this.registro)){
-      this.router.navigate(['/home']);
-      this.presentToast("top","Bienvenido",2000)
+    if (this.validaNombre(this.registro.NombreUsuario)){
+      if(this.validaCorreo(this.registro.correo)){
+        if(this.validateModel(this.registro)){
+          this.router.navigate(['/home']);
+          this.presentToast("top","Bienvenido",2000)
+        }else{
+          this.presentToast("middle","Falta "+this.field);
+        }
+      }else{
+        this.presentToast("middle","Correo no válido");
+      }
     }else{
-      this.presentToast("middle","Falta "+this.field);//Mensaje de error
+      this.presentToast("middle","Nombre de Usuarios inválido");
     }
   }
 
@@ -75,6 +83,16 @@ export class RegistroPage implements OnInit {
       }
     }
     return true;
+  }
+
+  validaCorreo (correo: string): boolean {
+    const correop = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]$/;
+    return correop.test(correo);
+  }
+
+  validaNombre (nombre: string): boolean {
+    const nom = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return nom.test(nombre);
   }
 
   async presentToast(position: 'top' | 'middle' | 'bottom', msg:string, duration?:number) {
