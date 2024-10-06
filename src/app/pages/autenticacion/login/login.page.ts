@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router';
-import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-login',  // El selector que utilizarás en el HTML
+  templateUrl: './login.page.html',  // Ruta del archivo de la plantilla HTML
+  styleUrls: ['./login.page.scss']  // Ruta del archivo de estilos SCSS
 })
+
 export class LoginPage implements OnInit {
+
+  ngOnInit() {
+  }
+}
+  /*
   //objeto login que almacena los datos de usuario y contraseña
   login:any={
     usuario:"",
@@ -22,9 +26,6 @@ export class LoginPage implements OnInit {
         console.log(this.login)
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   ingresar(){
@@ -64,6 +65,5 @@ export class LoginPage implements OnInit {
     });
 
     await toast.present();
-  }
+  }*/
 
-}

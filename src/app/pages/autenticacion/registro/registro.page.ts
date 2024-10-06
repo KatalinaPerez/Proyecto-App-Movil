@@ -71,10 +71,6 @@ export class RegistroPage implements OnInit {
     }
   }
 
-  /*validarContrasenas() {
-    this.contrasenaError = this.registro.contrasena !== this.registro.confcontrasena;
-  }*/
-
   validateModel(model:any){
     for(var [key ,value] of Object.entries(model)){
       if(value == ""){
@@ -86,7 +82,7 @@ export class RegistroPage implements OnInit {
   }
 
   validaCorreo (correo: string): boolean {
-    const correop = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]$/;
+    const correop = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
     return correop.test(correo);
   }
 
