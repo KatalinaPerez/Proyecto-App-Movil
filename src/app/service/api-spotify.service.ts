@@ -21,7 +21,8 @@ export class SpotifyService {
     const params = {
       q: trackName,
       type: 'tracks',
-      limit: 55,
+      limit: 60,
+      numberOfTopResults: 10,
     };
 
     return this.http.get(this.baseUrl, { headers, params });
