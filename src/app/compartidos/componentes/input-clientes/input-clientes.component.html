@@ -1,0 +1,22 @@
+<ion-item>
+  <ion-icon *ngIf="icon" slot="start" [name]="icon"></ion-icon>
+  <!-- En el input van las variables creadas en custom.ts
+  @Input() control!: FormControl;
+  @Input() type!: string;
+  @Input() label!: string;
+  @Input() autocomplete!: string;
+  @Input() icon!: string;
+  -->
+  <ion-input 
+  [formControl]="control"
+  [type]="type"
+  [autocomplete]="autocomplete"
+  [label]="label"
+  label-placement="floating"
+  ></ion-input>
+
+  <ion-button *ngIf="isContrasena" (click)="mostrarContrasena()" slot="end" fill="clear" shape="round">
+    <ion-icon slot="icon-only" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+  </ion-button>
+
+</ion-item>

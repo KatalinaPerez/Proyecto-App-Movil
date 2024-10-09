@@ -3,9 +3,16 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    path: '',
+    redirectTo: 'autenticacion',
+    pathMatch: 'full'
   },
+  
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/autenticacion/home/home.module').then( m => m.HomePageModule)
+  },
+
   {
     path: '',
     redirectTo: 'login',
@@ -13,12 +20,17 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/autenticacion/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'registro',
-    loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
+    loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule)
   },
+  {
+    path: 'autenticacion',
+    loadChildren: () => import('./pages/autenticacion/autenticacion.module').then( m => m.AutenticacionPageModule)
+  },
+
 ];
 
 @NgModule({

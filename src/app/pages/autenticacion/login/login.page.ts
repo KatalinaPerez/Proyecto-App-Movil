@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
-import { ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-login',  // El selector que utilizarás en el HTML
+  templateUrl: './login.page.html',  // Ruta del archivo de la plantilla HTML
+  styleUrls: ['./login.page.scss']  // Ruta del archivo de estilos SCSS
 })
+
 export class LoginPage implements OnInit {
+
+  ngOnInit() {
+  }
+}
+  /*
   //objeto login que almacena los datos de usuario y contraseña
   login:any={
     usuario:"",
@@ -15,18 +19,26 @@ export class LoginPage implements OnInit {
   }
   //variable para obtener el nombre del campo vacío
   field:string="";
-  constructor(public router: Router, public toastController: ToastController) { }
-
-  ngOnInit() {
+  constructor(public router: Router, public toastController: ToastController, public alertContoller:AlertController, private activatedRoute: ActivatedRoute) { 
+    this.activatedRoute.queryParams.subscribe(params =>{
+      if (this.router.getCurrentNavigation()?.extras.state){
+        this.login=this.router.getCurrentNavigation()?.extras?.state?.['login'];
+        console.log(this.login)
+      }
+    });
   }
 
   ingresar(){
     if(this.validateModel(this.login)){
       this.router.navigate(['/home']);//*si es exitoso redirige a home
-      this.presentToast("top","Bienvenido",2000)
+      this.presentToast("top","Bienvenido "+ this.login.usuario,2000)
     }else{
-      this.presentToast("middle","Error - Falta: "+this.field);//Mensaje de error
+      this.presentToast("middle","Falta: "+this.field);//Mensaje de error
     }    
+  }
+
+  inRegistro(){
+    this.router.navigate(['/registro']);
   }
 
   //validateModel para validar el ingreso de algo en los campos de mi html mediante el modelo login
@@ -53,6 +65,5 @@ export class LoginPage implements OnInit {
     });
 
     await toast.present();
-  }
+  }*/
 
-}
