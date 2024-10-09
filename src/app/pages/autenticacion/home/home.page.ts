@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { SpotifyService } from '../../../service/api-spotify.service'
 
 @Component({
   selector: 'app-home',
@@ -8,6 +8,29 @@ import { Router } from '@angular/router';
 })
 
 export class HomePage {
+  tracks: any[] = [];
+  hasSearched: boolean = false;
+
+  constructor(private spotifyService: SpotifyService) {}
+
+  searchTrack(trackName: string) {
+    if (!trackName) {
+      return;
+    }
+  
+    this.hasSearched = true;
+    this.spotifyService.searchTrack(trackName).subscribe(
+      (response) => {
+        console.log('API Response:', response); // Verifica lo que la API está retornando
+        this.tracks = response.tracks?.items || []; // Asegúrate de que 'items' existe
+      },
+      (error) => {
+        console.error('Error:', error);
+        this.tracks = [];
+      }
+    );
+  }
+
   cards = [
     { type: 'album', title: 'Chemtrails Over The Country Club', image: 'assets/imagenes/COCC-Lana-Del-Rey.jpg', artist: 'Lana del Rey' },
     { type: 'album', title: 'Born To Die', image: 'assets/imagenes/Lana-Del-Rey-Born-To-Die-album.jpg', artist: 'Lana del Rey' },
