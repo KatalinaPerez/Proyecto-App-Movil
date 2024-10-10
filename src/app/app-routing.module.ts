@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+/*import { AuthGuard } from './auth.guard';*/
+
+
 const routes: Routes = [
   {
     path: '',
@@ -10,27 +13,26 @@ const routes: Routes = [
   
   {
     path: 'home',
-    loadChildren: () => import('./pages/autenticacion/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/autenticacion/home/home.module').then( m => m.HomePageModule),
   },
-
-  {
+  /*{
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/autenticacion/login/login.module').then( m => m.LoginPageModule)
-  },
+    loadChildren: () => import('./pages/autenticacion/login/login.module').then( m => m.LoginPageModule),
+  
+  },*/
   {
     path: 'registro',
-    loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule)
+    loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
   },
   {
     path: 'autenticacion',
-    loadChildren: () => import('./pages/autenticacion/autenticacion.module').then( m => m.AutenticacionPageModule)
+    loadChildren: () => import('./pages/autenticacion/autenticacion.module').then( m => m.AutenticacionPageModule),
   },
-
 ];
 
 @NgModule({
@@ -39,4 +41,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
