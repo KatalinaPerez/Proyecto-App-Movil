@@ -19,6 +19,40 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- nuevo -->
+  <ion-content>
+    <!-- Input para escribir el nombre de la canción -->
+    <ion-item>
+      <ion-label>Track Name</ion-label>
+      <ion-input #trackNameInput></ion-input>
+    </ion-item>
+
+    <!-- Botón para realizar la búsqueda -->
+    <ion-button expand="full" (click)="searchTrack(trackNameInput.value ? trackNameInput.value.toString() : '')">
+      Search Track
+    </ion-button>
+
+    <!-- Lista de resultados de búsqueda -->
+    <ion-grid>
+      <ion-row *ngIf="tracks.length > 0">
+        <ion-col size="6" size-md="4" size-lg="3" *ngFor="let track of tracks"> <!-- Cambié a 3 columnas en pantallas grandes -->
+          <ion-card class="card-search-container">
+            <img [src]="track.data.albumOfTrack.coverArt?.sources[2]?.url" alt="Album Art" class="album-art"> <!-- Usar encadenamiento opcional -->
+            <ion-card-header>
+              <ion-card-title>{{ track.data.name }}</ion-card-title>
+              <ion-card-subtitle>{{ getArtists(track.data.artists.items) }}</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Mensaje si no hay resultados -->
+    <ion-item *ngIf="tracks.length === 0 && hasSearched">
+      <ion-label>No results found</ion-label>
+    </ion-item>
+  </ion-content>
+<!--
   <ion-content class="ion-padding ">
     <div>
       <h1> Top 10 Artistas</h1>
@@ -67,3 +101,4 @@
     </div>
   </ion-content>
 </div>
+-->
