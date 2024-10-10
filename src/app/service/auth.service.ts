@@ -5,17 +5,19 @@ import { Router } from '@angular/router'; // Importa el Router
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn: boolean = false;
+  private loggedIn: boolean = false; //variable que empiez en falso
 
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  //funcion que es true
   login(): boolean {
-    this.loggedIn = true;
+    this.loggedIn = true; 
     localStorage.setItem('token', 'your_token_here'); 
     return this.loggedIn;
   }
 
+  //funcion que es falso
   logout(): void {
     this.loggedIn = false;
     localStorage.removeItem('token');

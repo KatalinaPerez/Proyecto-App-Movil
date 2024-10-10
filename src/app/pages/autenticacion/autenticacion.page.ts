@@ -26,17 +26,16 @@ export class AutenticacionPage implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  /*login() {
     if (this.form.valid) {
       const { email, contrasena } = this.form.value;
       const loggedIn = this.authService.login(); // Simula el inicio de sesión
       if (loggedIn) {
         this.router.navigate(['/home']); // Redirige al home si el inicio de sesión es exitoso
       } else {
-        // Aquí puedes manejar errores de autenticación si es necesario
-        console.error('Login failed');
+        console.error('Error Inicio Sesión');
       }
     }
-  }
+  }*/
 
 }
