@@ -17,7 +17,6 @@ export class HomePage {
     if (!trackName) {
       return;
     }
-  
     this.hasSearched = true;
     this.spotifyService.searchTrack(trackName).subscribe(
       (response) => {
@@ -34,7 +33,6 @@ export class HomePage {
   getArtists(artists: any[]): string {
     return artists.map(artist => artist.profile.name).join(', ');
   }
-  
   cards = [
     { type: 'album', title: 'Chemtrails Over The Country Club', image: 'assets/imagenes/COCC-Lana-Del-Rey.jpg', artist: 'Lana del Rey' },
     { type: 'album', title: 'Born To Die', image: 'assets/imagenes/Lana-Del-Rey-Born-To-Die-album.jpg', artist: 'Lana del Rey' },
