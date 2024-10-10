@@ -23,35 +23,15 @@
   <ion-content>
     <!-- Input para escribir el nombre de la canción -->
     <ion-item>
-      <ion-label>Track Name</ion-label>
+      <ion-label style="padding-right: 1rem;">Buscar</ion-label>
       <ion-input #trackNameInput></ion-input>
     </ion-item>
-<<<<<<< HEAD:src/app/pages/home/home.page.html
-  
-=======
 
->>>>>>> master:src/app/pages/autenticacion/home/home.page.html
     <!-- Botón para realizar la búsqueda -->
     <ion-button expand="full" (click)="searchTrack(trackNameInput.value ? trackNameInput.value.toString() : '')">
       Search Track
     </ion-button>
 
-<<<<<<< HEAD:src/app/pages/home/home.page.html
-  
-    <!-- Lista de resultados de búsqueda -->
-    <ion-list *ngIf="tracks.length > 0">
-      <ion-item *ngFor="let track of tracks">
-        <ion-label>
-          <h2>{{ track.data.name }}</h2>
-          <p>{{ track.data.artists[0]?.name }}</p>
-        </ion-label>
-        <ion-thumbnail slot="start">
-          <img [src]="track.data.albumOfTrack.coverArt?.sources[2]?.url" alt="Album Art"> <!-- Usar encadenamiento opcional -->
-        </ion-thumbnail>
-      </ion-item>
-    </ion-list>
-  
-=======
     <!-- Lista de resultados de búsqueda -->
     <ion-grid>
       <ion-row *ngIf="tracks.length > 0">
@@ -67,17 +47,12 @@
       </ion-row>
     </ion-grid>
 
->>>>>>> master:src/app/pages/autenticacion/home/home.page.html
     <!-- Mensaje si no hay resultados -->
     <ion-item *ngIf="tracks.length === 0 && hasSearched">
       <ion-label>No results found</ion-label>
     </ion-item>
   </ion-content>
-<<<<<<< HEAD:src/app/pages/home/home.page.html
-
-=======
 <!--
->>>>>>> master:src/app/pages/autenticacion/home/home.page.html
   <ion-content class="ion-padding ">
     <div>
       <h1> Top 10 Artistas</h1>
