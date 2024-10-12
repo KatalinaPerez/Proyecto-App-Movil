@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SpotifyService {
+export class ApiSpotifyService {
 
   private baseUrl = 'https://spotify23.p.rapidapi.com/search/';
   private apiKey = '1f0d6a3291msh2b955fd6cedd810p11daccjsn0293ad3b9a38';
@@ -27,4 +27,5 @@ export class SpotifyService {
 
     return this.http.get(this.baseUrl, { headers, params });
   }
+  
 }

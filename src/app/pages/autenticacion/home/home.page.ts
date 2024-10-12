@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { SpotifyService } from '../../../service/api-spotify.service'
+import { ApiSpotifyService } from '../../../service/api-spotify.service'
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,7 @@ export class HomePage {
   tracks: any[] = [];
   hasSearched: boolean = false;
 
-  constructor(private spotifyService: SpotifyService) {}
+  constructor(private spotifyService: ApiSpotifyService) {}
 
   searchTrack(trackName: string) {
     if (!trackName) {
