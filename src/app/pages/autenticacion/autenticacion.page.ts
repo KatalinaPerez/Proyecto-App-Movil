@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
+import { FirebaseService } from 'src/app/service/firebase.service';
 
 @Component({
   selector: 'app-autenticacion',
@@ -13,9 +15,20 @@ export class AutenticacionPage implements OnInit {
     contrasena: new FormControl('',[Validators.required])
   })
 
-  constructor() { }
+  firabaseSvc = inject(FirebaseService);
 
   ngOnInit() {
+
   }
+
+  submit() {
+    if (this.form.valid) {
+      this.firabaseSvc.signIn(this.form.value as User).then(res => {
+        console.log(res);
+      })
+    }
+  }
+
+  
 
 }
