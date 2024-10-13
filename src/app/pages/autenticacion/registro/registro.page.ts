@@ -1,104 +1,100 @@
-import { Component, OnInit} from '@angular/core';
-import { addIcons } from 'ionicons';
-import { eye, lockClosed} from 'ionicons/icons';
-import { Router} from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { User } from 'src/app/models/user.model';
+import { FirebaseService } from 'src/app/service/firebase.service';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.page.html',
-  styleUrls: ['./registro.page.scss'],
+    selector: 'app-registro',
+    templateUrl: './registro.page.html',
+    styleUrls: ['./registro.page.scss'],
 })
+
 export class RegistroPage implements OnInit {
 
-  registro:any={
-    NombreUsuario:"",
-    correo:"",
-    contrasena:"",
-    confcontrasena:"",
-  }
-  field:string="";
+    form = new FormGroup({
+        //Obtenemos uid al crear nuevo usuario
+        uid: new FormControl(''),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        contrasena: new FormControl('', [Validators.required]),
+        name: new FormControl('', [Validators.required, Validators.minLength(4)])//nombre con minimo  4 letras
+    })
 
-  contrasena: string = 'password';
-  ojo: string = 'eye-off';
+    firabaseSvc = inject(FirebaseService);
+    utilsSvc = inject(UtilsService);
 
-  contrasenaConf: string = 'password';
-  ojoConf: string = 'eye-off';
+    ngOnInit() {
 
-  //contrasenaError: boolean = false;
+    }
 
-  constructor(public router: Router, public toastController: ToastController) { 
-    addIcons({ eye, lockClosed});
-  }
+    async submit() {
+        if (this.form.valid) {
 
-  ngOnInit() {
-  }
+            const loading = await this.utilsSvc.loading();
+            await loading.present();
 
-  inhome(){
-    if (this.validaNombre(this.registro.NombreUsuario)){
-      if(this.validaCorreo(this.registro.correo)){
-        if(this.validateModel(this.registro)){
-          this.router.navigate(['/home']);
-          this.presentToast("top","Bienvenido",2000)
-        }else{
-          this.presentToast("middle","Falta "+this.field);
+            this.firabaseSvc.signUp(this.form.value as User).then(async res => {
+
+                await this.firabaseSvc.updateUser(this.form.value.name);
+
+                let uid = res.user.uid;//creamos variable
+                this.form.controls.uid.setValue(uid);//se la pasamos al formulario
+                this.setUserInfo(uid);//guardamos uid con funcion
+
+            }).catch(error => {
+                console.log(error);
+
+                this.utilsSvc.presentToast({
+                    message: "El usuario o la contraseña es inválido, porfavor vuelva a ingresar",
+                    duration: 2500,
+                    color: 'tertiary',
+                    position: 'middle',
+                    icon: 'alert-circle-outline'
+
+                })
+
+
+            })//al obtener respuesta el loading debe desaparecer:
+                .finally(() => {
+                    loading.dismiss();
+                })
         }
-      }else{
-        this.presentToast("middle","Correo no válido");
-      }
-    }else{
-      this.presentToast("middle","Nombre de Usuarios inválido");
     }
-  }
 
-  visibilidadContrasena(){
-    if(this.contrasena === 'password'){
-      this.contrasena = 'text';
-      this.ojo = 'eye';
-    }else{
-      this.contrasena = 'password';
-      this.ojo = 'eye-off';
+    async setUserInfo(uid: string) {
+        if (this.form.valid) {
+
+            const loading = await this.utilsSvc.loading();
+            await loading.present();
+
+            let path = `user/${uid}`;
+            //la contraseña no se debe guardar en nuestra base de dato
+            delete this.form.value.contrasena;
+
+            this.firabaseSvc.setDocumento(path, this.form.value).then(async res => {
+                //debemos mantener usuarios localmente y enrutar al home 
+                this.utilsSvc.saveLocal('user', this.form.value)
+                this.utilsSvc.routerLink('/main/home');
+                this.form.reset();
+
+            }).catch(error => {
+                console.log(error);
+
+                this.utilsSvc.presentToast({
+                    message: "El usuario o la contraseña es inválido, porfavor vuelva a ingresar",
+                    duration: 2500,
+                    color: 'tertiary',
+                    position: 'middle',
+                    icon: 'alert-circle-outline'
+
+                })
+
+
+            })//al obtener respuesta el loading debe desaparecer:
+                .finally(() => {
+                    loading.dismiss();
+                })
+        }
     }
-  }
-
-  visibilidadContrasenaConf(){
-    if(this.contrasenaConf === 'password'){
-      this.contrasenaConf = 'text';
-      this.ojoConf = 'eye';
-    }else{
-      this.contrasenaConf = 'password';
-      this.ojoConf = 'eye-off';
-    }
-  }
-
-  validateModel(model:any){
-    for(var [key ,value] of Object.entries(model)){
-      if(value == ""){
-        this.field = key;
-        return false;
-      }
-    }
-    return true;
-  }
-
-  validaCorreo (correo: string): boolean {
-    const correop = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-    return correop.test(correo);
-  }
-
-  validaNombre (nombre: string): boolean {
-    const nom = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return nom.test(nombre);
-  }
-
-  async presentToast(position: 'top' | 'middle' | 'bottom', msg:string, duration?:number) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: duration?duration:2500,
-      position: position,
-      
-    });
-
-    await toast.present();
-  }
 }
