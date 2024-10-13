@@ -4,7 +4,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, up
 import { User } from '../models/user.model';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc } from '@angular/fire/firestore';
+import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,11 @@ export class FirebaseService {
   // Crear o reemplazar un documento. Guardamos datos del usuario
   setDocumento (path:string, data: any) {
     return setDoc(doc(getFirestore(), path), data);
+  }
+
+  //Obtencion de datos de usuario
+  async getDocumento (path:string) {
+    return (await getDoc(doc(getFirestore(), path))).data;
   }
 
 }

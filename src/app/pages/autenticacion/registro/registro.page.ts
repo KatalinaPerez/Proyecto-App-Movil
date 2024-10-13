@@ -68,7 +68,7 @@ export class RegistroPage implements OnInit {
             const loading = await this.utilsSvc.loading();
             await loading.present();
 
-            let path = `user/${uid}`;
+            let path = `users/${uid}`;
             //la contraseña no se debe guardar en nuestra base de dato
             delete this.form.value.contrasena;
 
@@ -89,7 +89,6 @@ export class RegistroPage implements OnInit {
                     icon: 'alert-circle-outline'
 
                 })
-
 
             })//al obtener respuesta el loading debe desaparecer:
                 .finally(() => {
