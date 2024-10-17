@@ -1,17 +1,19 @@
-import { Component, ViewChild } from '@angular/core';
-import { SpotifyService } from '../../../service/api-spotify.service'
+import { Component, OnInit } from '@angular/core';
+import { ApiSpotifyService } from '../../../service/api-spotify.service'
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-
-export class HomePage {
+export class HomePage implements OnInit {
   tracks: any[] = [];
   hasSearched: boolean = false;
 
-  constructor(private spotifyService: SpotifyService) {}
+  constructor(private spotifyService: ApiSpotifyService) { }
+
+  ngOnInit() {
+  }
 
   searchTrack(trackName: string) {
     if (!trackName) {

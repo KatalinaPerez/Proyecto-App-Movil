@@ -1,39 +1,48 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button default-href="/login"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Registro Usuario</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header backButtom="/autenticacion" titulo="Registro"></app-header>
 
-<ion-content [fullscreen]="true" class="dark-theme">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Registro de usuario</ion-card-subtitle>
-    </ion-card-header>
 
-    <ion-card-content>
-      <ion-input label="Nombre Usuario" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="registro.NombreUsuario"></ion-input>
-      <br>
-      <ion-input label="Correo electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su correo electrónico" [(ngModel)]="registro.correo"></ion-input>
-      <br>
-      <ion-input label="Contraseña" label-placement="floating" [type]="contrasena" fill="outline" placeholder="Ingrese su contraseña" [(ngModel)]="registro.contrasena">
-        <ion-button fill="clear" slot="end" (click)="visibilidadContrasena()" aria-label="Show/hide">
-          <ion-icon slot="icon-only" [name]="ojo" aria-hidden="true"></ion-icon>
+
+<ion-content class="dark-theme">
+  <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+    <ion-card class="dark-theme">
+      <!--          Email con validaciones         -->
+      <app-input-clientes 
+      autocomplete="name" 
+      icon="person-outline" 
+      [control]="form.controls.name" 
+      type="text"
+      label="Nombre">
+      </app-input-clientes>
+      <!--El mensjae se mostrara cuando el name tenga un error o toco el input-->
+      <div class="msj-validacion" *ngIf="form.controls.name.errors && form.controls.name.touched">
+        <!--Aqui decimos que tipo de error es, en nuestro casoi son dos (ver en ts)-->
+        <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
+        <div *ngIf="form.controls.name.errors?.['minLenght']">AL menos debe tener 4 caracteres</div>
+      </div>
+      <!--          Email con validaciones         -->
+      <app-input-clientes autocomplete="email" icon="mail-outline" [control]="form.controls.email" type="email"
+        label="Correo">
+      </app-input-clientes>
+      <!--El mensjae se mostrara cuando el email tenga un error o toco el input-->
+      <div class="msj-validacion" *ngIf="form.controls.email.errors && form.controls.email.touched">
+        <!--Aqui decimos que tipo de error es, en nuestro casoi son dos (ver en ts)-->
+        <div *ngIf="form.controls.email.errors?.['required']">El correo es requerido</div>
+        <div *ngIf="form.controls.email.errors?.['email']">Ingrese correo válido</div>
+      </div>
+      <!--              Contraseña y su validacion           -->
+      <app-input-clientes [control]="form.controls.contrasena" icon="lock-closed-outline" type="password"
+        label="Contrasena"></app-input-clientes>
+      <div class="msj-validacion" *ngIf="form.controls.contrasena.errors && form.controls.contrasena.touched">
+        <div *ngIf="form.controls.contrasena.errors?.['required']">El contraseña es requerida</div>
+      </div>
+
+      <ion-item>
+        <ion-button class="animated-button" routerLink="/home" expand="block" mode="ios"  type="submit"
+          [disabled]="form.invalid">
+          Registrarse
+          <ion-icon slot="start" name="person-add-outline"></ion-icon>
         </ion-button>
-      </ion-input>
-      <br>
-      <ion-input label="Confirme Contraseña" label-placement="floating" [type]="contrasenaConf" fill="outline" placeholder="Vuelva a escribir su contraseña" [(ngModel)]="registro.confcontrasena"
-        helperText="Escribe tu contraseña"
-        errorText="Las contraseñas no coinciden">
-        <ion-button fill="clear" slot="end" (click)="visibilidadContrasenaConf()" aria-label="Show/hide">
-          <ion-icon slot="icon-only" [name]="ojoConf" aria-hidden="true"></ion-icon>
-        </ion-button>
-      </ion-input>
-    </ion-card-content>
-    <ion-item>
-      <ion-button expand="block" (click)="inhome()" class="animated-button">Registrarse</ion-button>
-    </ion-item>
-  </ion-card>
+      </ion-item>
+    </ion-card>
+  </form>
 </ion-content>

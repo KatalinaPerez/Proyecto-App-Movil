@@ -9,6 +9,8 @@ import { AutenticacionPageRoutingModule } from './autenticacion-routing.module';
 import { AutenticacionPage } from './autenticacion.page';
 import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
+
+
 @NgModule({
   imports: [
     CommonModule,
