@@ -13,18 +13,17 @@ export class AuthService {
   //funcion que es true
   login(): boolean {
     this.loggedIn = true; 
-    localStorage.setItem('token', 'your_token_here'); 
+    localStorage.setItem('usuario', 'nombre de usuario que se conecta'); 
     return this.loggedIn;
   }
-
   //funcion que es falso
   logout(): void {
     this.loggedIn = false;
-    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('usuario');
   }
 }
 

@@ -5,10 +5,13 @@ import { AuthService } from '../service/auth.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
-  canActivate(route: import('@angular/router').ActivatedRouteSnapshot, state: import('@angular/router').RouterStateSnapshot): boolean {
+  canActivate(
+    route: import('@angular/router').ActivatedRouteSnapshot, 
+    state: import('@angular/router').RouterStateSnapshot): boolean {
     return this.authService.isLoggedIn(); // Usa el método de instancia para verificar autenticación
   }
 }

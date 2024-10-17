@@ -4,7 +4,7 @@ import { AuthGuard } from './guard/auth.guard';
 
 
 const routes: Routes = [
-  {
+  {//mi pagina de inicio debe ser home
     path: '',
     redirectTo: 'autenticacion',
     pathMatch: 'full'
