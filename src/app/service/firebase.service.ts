@@ -17,7 +17,7 @@ export class FirebaseService {
 
   //  ::::::::::::::::::::: AUTENTIFICACION :::::::::::::::::::::
   getAuth() {
-    return getAuth;
+    return getAuth();
   }
   //Entrar a la app
   signIn(user: User) {
@@ -31,6 +31,7 @@ export class FirebaseService {
   updateUser(displayName: string) {
     return updateProfile(getAuth().currentUser, { displayName })
   }
+  
 
   //  ::::::::::::::::::::: BASE DE DATOS :::::::::::::::::::::
 
