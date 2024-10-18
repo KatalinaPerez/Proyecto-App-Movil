@@ -1,17 +1,37 @@
-import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { AuthService } from '../service/auth.service'; 
+import { inject, Injectable } from '@angular/core';
+import { CanActivate, UrlTree, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { FirebaseService } from '../service/firebase.service';
+import { UtilsService } from '../service/utils.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService) {}
+  
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService);
 
   canActivate(
-    route: import('@angular/router').ActivatedRouteSnapshot, 
-    state: import('@angular/router').RouterStateSnapshot): boolean {
-    return this.authService.isLoggedIn(); // Usa el método de instancia para verificar autenticación
+    route: ActivatedRouteSnapshot, 
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+      let user = localStorage.getItem('user');
+
+    return new Promise((resolve) => {
+      //onAuthStateChanged nos indica si un usuario está autenticado o no
+      this.firebaseSvc.getAuth().onAuthStateChanged((auth) => {
+
+        if(auth){
+          resolve(true);
+        }else{
+          this.utilsSvc.routerLink('/autenticacion');
+          resolve(false);
+        }
+
+      })
+
+    });
   }
 }
