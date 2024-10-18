@@ -5,18 +5,22 @@ import { User } from '../models/user.model';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-
-  //  ::::::::::::::::::::: AUTENTIFICACION :::::::::::::::::::::
-
+  
   //variables con instancias de distintos servicios que me permiten validar
   auth = inject(AngularFireAuth);
   firebase = inject(AngularFirestore);
+  utilsSvc = inject(UtilsService);
 
+  //  ::::::::::::::::::::: AUTENTIFICACION :::::::::::::::::::::
+  getAuth() {
+    return getAuth();
+  }
   //Entrar a la app
   signIn(user: User) {
     return signInWithEmailAndPassword(getAuth(), user.email, user.contrasena);
@@ -29,6 +33,12 @@ export class FirebaseService {
   updateUser(displayName: string) {
     return updateProfile(getAuth().currentUser, { displayName })
   }
+  // Cierrre sesión 
+  signOut(){
+    getAuth().signOut();
+    localStorage.removeItem('user');
+    this.utilsSvc.routerLink('/autenticacion');
+  }
 
   //  ::::::::::::::::::::: BASE DE DATOS :::::::::::::::::::::
 
@@ -39,7 +49,7 @@ export class FirebaseService {
 
   //Obtencion de datos de usuario
   async getDocumento (path:string) {
-    return (await getDoc(doc(getFirestore(), path))).data;
+    return (await getDoc(doc(getFirestore(), path))).data();
   }
 
 }

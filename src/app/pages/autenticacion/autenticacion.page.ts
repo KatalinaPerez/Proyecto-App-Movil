@@ -33,7 +33,8 @@ export class AutenticacionPage implements OnInit {
 
       this.firabaseSvc.signIn(this.form.value as User).then(res => {
 
-        console.log(res);
+        this.getUserInfo(res.user.uid);
+        
       }).catch(error => {
         console.log(error);
 
