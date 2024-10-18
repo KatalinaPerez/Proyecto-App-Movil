@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class FirebaseService {
   //variables con instancias de distintos servicios que me permiten validar
   auth = inject(AngularFireAuth);
   firebase = inject(AngularFirestore);
+  utilsSvc = inject(UtilsService);
 
   //  ::::::::::::::::::::: AUTENTIFICACION :::::::::::::::::::::
   getAuth() {
@@ -31,7 +33,12 @@ export class FirebaseService {
   updateUser(displayName: string) {
     return updateProfile(getAuth().currentUser, { displayName })
   }
-  
+  // Cierrre sesión 
+  signOut(){
+    getAuth().signOut();
+    localStorage.removeItem('user');
+    this.utilsSvc.routerLink('/autenticacion');
+  }
 
   //  ::::::::::::::::::::: BASE DE DATOS :::::::::::::::::::::
 
