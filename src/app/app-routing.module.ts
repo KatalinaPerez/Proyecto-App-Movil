@@ -22,14 +22,14 @@ const routes: Routes = [
     canActivate:[AuthGuard]
     
   },
+  {
+    path: 'registro',
+    loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
+  },
   /*
   {
     path: 'home',
     loadChildren: () => import('./pages/main/home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: 'registro',
-    loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
   },
   {
     path: 'main',
@@ -40,8 +40,6 @@ const routes: Routes = [
       }
     ]
   },*/
-
-
 
 ];
 
