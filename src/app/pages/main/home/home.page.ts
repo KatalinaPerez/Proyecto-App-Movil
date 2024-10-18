@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ApiSpotifyService } from '../../../service/api-spotify.service'
+import { FirebaseService } from 'src/app/service/firebase.service';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +12,17 @@ export class HomePage implements OnInit {
   tracks: any[] = [];
   hasSearched: boolean = false;
 
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService);
+
   constructor(private spotifyService: ApiSpotifyService) { }
 
   ngOnInit() {
+  }
+
+  //Cierre sesion
+  signOut(){
+    this.firebaseSvc.signOut();
   }
 
   searchTrack(trackName: string) {
