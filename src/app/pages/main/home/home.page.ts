@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ApiSpotifyService } from '../../../service/api-spotify.service'
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -40,6 +41,17 @@ export class HomePage implements OnInit {
         this.tracks = [];
       }
     );
+  }
+//Funcion para abrir la pagina donde se vera la cancion
+  openCancion(trak: any) {
+    this.router.navigate(['/cancion'],
+      {
+        queryParams: {
+          trackId: track.data.id,
+          travkName: this.tracks.data.name
+        }
+      }
+    )
   }
 
   getArtists(artists: any[]): string {
