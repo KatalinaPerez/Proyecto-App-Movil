@@ -72,10 +72,11 @@ export class RegistroPage implements OnInit {
             //la contraseña no se debe guardar en nuestra base de dato
             delete this.form.value.contrasena;
 
-            this.firabaseSvc.setDocumento(path, this.form.value).then(async res => {
+            this.firabaseSvc.setDocumento(path, this.form.value, ).then(async res => {
                 //debemos mantener usuarios localmente y enrutar al home 
                 this.utilsSvc.saveLocal('user', this.form.value)
                 this.utilsSvc.routerLink('/main/home');
+                
                 this.form.reset();
 
             }).catch(error => {
