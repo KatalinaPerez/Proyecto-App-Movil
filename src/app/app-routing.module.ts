@@ -6,8 +6,13 @@ import { AuthGuard } from './guard/auth.guard';
 
 
 const routes: Routes = [
-  {//mi pagina de inicio debe ser home
+  {
     path: '',
+    redirectTo: 'autenticacion',
+    pathMatch: 'full'
+  },
+  {
+    path: 'autenticacion',
     redirectTo: 'autenticacion',
     pathMatch: 'full'
   },
@@ -18,18 +23,38 @@ const routes: Routes = [
   },
   {
     path: 'main',
+    redirectTo: 'main',
+    pathMatch: 'full'
+  },
+  {
+    path: 'main',
     loadChildren: () => import('./pages/main/main.module').then( m => m.MainPageModule),
     canActivate:[AuthGuard]
-    
+  },
+  {
+    path: 'registro',
+    redirectTo: 'registro',
+    pathMatch: 'full'
   },
   {
     path: 'registro',
     loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
+    canActivate:[noAuthGuard]
   },
+  {
+    path: 'e404',
+    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'e404',
+    pathMatch: 'full'
+  },
+  
   /*
   {
     path: 'home',
-    loadChildren: () => import('./pages/main/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/main/home/home.module').then( m => m.HomePageModule),
   },
   {
     path: 'main',
@@ -39,7 +64,8 @@ const routes: Routes = [
         component: HomePage,
       }
     ]
-  },*/
+  },
+  */
 
 ];
 

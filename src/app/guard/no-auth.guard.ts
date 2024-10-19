@@ -18,12 +18,8 @@ export class noAuthGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      
     return new Promise((resolve) => {
       //onAuthStateChanged nos indica si un usuario está autenticado o no
       this.firebaseSvc.getAuth().onAuthStateChanged((auth) => {
