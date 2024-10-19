@@ -13,8 +13,18 @@ const routes: Routes = [
   },
   {
     path: 'autenticacion',
+    redirectTo: 'autenticacion',
+    pathMatch: 'full'
+  },
+  {
+    path: 'autenticacion',
     loadChildren: () => import('./pages/autenticacion/autenticacion.module').then( m => m.AutenticacionPageModule),
     canActivate:[noAuthGuard]
+  },
+  {
+    path: 'main',
+    redirectTo: 'main',
+    pathMatch: 'full'
   },
   {
     path: 'main',
@@ -22,21 +32,14 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/main/home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: 'main',
-    children: [
-      {
-        path: 'home',
-        component: HomePage,
-      }
-    ]
+    path: 'registro',
+    redirectTo: 'registro',
+    pathMatch: 'full'
   },
   {
     path: 'registro',
     loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
+    canActivate:[noAuthGuard]
   },
   {
     path: 'e404',
@@ -47,8 +50,21 @@ const routes: Routes = [
     redirectTo: 'e404',
     pathMatch: 'full'
   },
-
+  
   /*
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/main/home/home.module').then( m => m.HomePageModule),
+  },
+  {
+    path: 'main',
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      }
+    ]
+  },
   */
 
 ];
