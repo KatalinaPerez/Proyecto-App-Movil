@@ -13,6 +13,16 @@ const routes: Routes = [
     path: 'contrasena-olvidada',
     loadChildren: () => import('./contrasena-olvidada/contrasena-olvidada.module').then( m => m.ContrasenaOlvidadaPageModule)
   },
+  {
+    path: 'contrasena-olvidada',
+    redirectTo: 'contrasena-olvidada',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'e404',
+    pathMatch: 'full'
+  },
 
 ];
 
