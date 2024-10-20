@@ -42,6 +42,7 @@ export class RegistroPage implements OnInit {
                 this.form.controls.uid.setValue(uid);//se la pasamos al formulario
                 this.setUserInfo(uid);//guardamos uid con funcion
 
+
             }).catch(error => {
                 console.log(error);
 
@@ -74,10 +75,19 @@ export class RegistroPage implements OnInit {
 
             this.firabaseSvc.setDocumento(path, this.form.value, ).then(async res => {
                 //debemos mantener usuarios localmente y enrutar al home 
-                this.utilsSvc.saveLocal('user', this.form.value)
+                this.utilsSvc.saveLocal('users', this.form.value)
                 this.utilsSvc.routerLink('/main/home');
-                
                 this.form.reset();
+
+                this.firabaseSvc.getDocumento(path).then((user: User) => {
+                    this.utilsSvc.presentToast({
+                        message: `Bienvenid@ ${user.name}`,
+                        duration: 1500,
+                        color: 'tertiary',
+                        position: 'middle',
+                        icon: 'person-circle-outline'
+                    })
+                })
 
             }).catch(error => {
                 console.log(error);
