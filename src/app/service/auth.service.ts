@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'; // Importa el Router
 
 @Injectable({
@@ -25,5 +25,5 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('usuario');
   }
-}
+}*/
 

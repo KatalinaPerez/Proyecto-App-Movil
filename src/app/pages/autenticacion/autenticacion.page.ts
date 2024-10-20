@@ -65,7 +65,7 @@ export class AutenticacionPage implements OnInit {
 
       this.firabaseSvc.getDocumento(path).then((user: User) => {
 
-        this.utilsSvc.saveLocal('user', user)
+        this.utilsSvc.saveLocal('users', user)
         this.utilsSvc.routerLink('/main/home');
         this.form.reset();
 
