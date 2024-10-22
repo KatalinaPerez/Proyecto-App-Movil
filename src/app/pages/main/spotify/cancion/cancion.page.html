@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ trackName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img [src]="trackCover" alt="Album Art">
+    <ion-card-header>
+      <ion-card-title>{{ trackName }}</ion-card-title>
+      <ion-card-subtitle>{{ trackArtist }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  
+  <!-- Botón de reproducción -->
+   <div class="audio-container">
+      <audio controls>
+        <source src={{previewUrl}} type="audio/mpeg">
+      </audio>
+   </div>
+
+</ion-content>
