@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HomePage } from './pages/main/home/home.page';
 import { noAuthGuard } from './guard/no-auth.guard';
 import { AuthGuard } from './guard/auth.guard';
-
+import { CancionPage } from './pages/main/spotify/cancion/cancion.page';
 
 const routes: Routes = [
   {//mi pagina de inicio debe ser home
@@ -26,6 +25,7 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
   },
+  { path: 'cancion', component: CancionPage },
 
   /*
   {
