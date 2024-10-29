@@ -1,0 +1,10 @@
+.audio-player-container {
+    display: flex;               /* Usa flexbox para alinear elementos */
+    justify-content: center;     /* Centra horizontalmente */
+    align-items: center;         /* Centra verticalmente */
+    height: 100vh;              /* Ocupa toda la altura de la vista */
+  }
+  
+  audio {
+    margin: 0;                 /* Elimina márgenes por defecto */
+  }

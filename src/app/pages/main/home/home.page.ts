@@ -2,7 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ApiSpotifyService } from '../../../service/api-spotify.service'
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
-
+import { Router } from '@angular/router'
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -11,11 +13,10 @@ import { UtilsService } from 'src/app/service/utils.service';
 export class HomePage implements OnInit {
   tracks: any[] = [];
   hasSearched: boolean = false;
-
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
-  constructor(private spotifyService: ApiSpotifyService) { }
+  constructor(private spotifyService: ApiSpotifyService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -39,6 +40,35 @@ export class HomePage implements OnInit {
         console.error('Error:', error);
         this.tracks = [];
       }
+    );
+  }
+//Funcion para abrir la pagina donde se vera la cancion
+  openCancion(track: any) {
+    this.getPreviewUrl(track.data.id).subscribe(previewUrl => {
+      this.router.navigate(['/cancion'],
+        {
+          queryParams: {
+            trackName: track.data.name,
+            trackArtist: this.getArtists(track.data.artists.items),
+            trackCover: track.data.albumOfTrack.coverArt.sources[2].url,
+            previewUrl: previewUrl // Ahora esto tendrá el valor correcto
+          }
+        }
+      );
+    });
+  }
+
+  getPreviewUrl(trackId: string): Observable<string> {
+    return this.spotifyService.getTrackById(trackId).pipe(
+      map(response => {
+        const track = response.tracks[0];
+        console.log('API Response TraksById:', response);
+        return track.preview_url;      
+      }),
+      catchError(error => {
+        console.error('Error obteniendo la URL del preview:', error);
+        return of(null); // Devuelve null en caso de error
+      })
     );
   }
 
