@@ -40,6 +40,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
     canActivate:[noAuthGuard]
   },
+  { path: 'cancion', component: CancionPage },
   {
     path: 'e404',
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
@@ -49,7 +50,6 @@ const routes: Routes = [
     redirectTo: 'e404',
     pathMatch: 'full'
   },
-  { path: 'cancion', component: CancionPage },
   /*
   {
     path: 'home',

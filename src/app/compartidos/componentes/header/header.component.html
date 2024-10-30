@@ -2,7 +2,7 @@
   <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-back-button *ngIf="backButtom" [defaultHref]="backButtom" ></ion-back-button>
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button *ngIf="showMenuButton"></ion-menu-button>
     </ion-buttons>  
     <ion-title>
       <strong>{{titulo}}</strong>

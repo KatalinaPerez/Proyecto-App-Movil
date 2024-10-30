@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CancionPageRoutingModule } from './cancion-routing.module';
 
 import { CancionPage } from './cancion.page';
+import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CancionPageRoutingModule
+    CancionPageRoutingModule,
+    CompartidosModule
   ],
   declarations: [CancionPage]
 })
