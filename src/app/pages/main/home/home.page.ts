@@ -31,17 +31,28 @@ export class HomePage implements OnInit {
       return;
     }
     this.hasSearched = true;
-    this.spotifyService.searchTrack(trackName).subscribe(
-      (response) => {
-        console.log('API Response:', response); // Verifica lo que la API está retornando
-        this.tracks = response.tracks?.items || []; // Asegúrate de que 'items' existe
-      },
-      (error) => {
-        console.error('Error:', error);
-        this.tracks = [];
-      }
-    );
-  }
+
+    // Presentar el loading
+    this.utilsSvc.loading().then(loading => {
+      loading.present();
+
+      this.spotifyService.searchTrack(trackName).subscribe(
+        (response) => {
+          console.log('API Response:', response); // Verifica lo que la API está retornando
+          this.tracks = response.tracks?.items || []; // Asegúrate de que 'items' existe
+        },
+        (error) => {
+          console.error('Error:', error);
+          this.tracks = [];
+        },
+        () => {
+          // Ocultar el loading una vez que se complete la búsqueda
+          loading.dismiss();
+        }
+      );
+    });
+}
+
 //Funcion para abrir la pagina donde se vera la cancion
   openCancion(track: any) {
     this.getPreviewUrl(track.data.id).subscribe(previewUrl => {
@@ -54,6 +65,7 @@ export class HomePage implements OnInit {
             previewUrl: previewUrl // Ahora esto tendrá el valor correcto
           }
         }
+        
       );
     });
   }
