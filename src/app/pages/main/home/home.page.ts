@@ -64,8 +64,7 @@ export class HomePage implements OnInit {
             trackCover: track.data.albumOfTrack.coverArt.sources[2].url,
             previewUrl: previewUrl // Ahora esto tendrá el valor correcto
           }
-        }
-        
+        } 
       );
     });
   }
