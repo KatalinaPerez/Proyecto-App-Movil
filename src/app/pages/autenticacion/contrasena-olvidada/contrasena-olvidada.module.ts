@@ -9,6 +9,8 @@ import { ContrasenaOlvidadaPageRoutingModule } from './contrasena-olvidada-routi
 import { ContrasenaOlvidadaPage } from './contrasena-olvidada.page';
 import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +19,7 @@ import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
     ContrasenaOlvidadaPageRoutingModule,
     CompartidosModule
   ],
-  declarations: [ContrasenaOlvidadaPage]
+  declarations: [ContrasenaOlvidadaPage],
+  providers: [EmailComposer]
 })
 export class ContrasenaOlvidadaPageModule {}

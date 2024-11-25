@@ -12,7 +12,7 @@ import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 })
 export class ContrasenaOlvidadaPage implements OnInit {
 
-  constructor(private emailComposer: EmailComposer) { }
+  constructor(public emailComposer: EmailComposer) { }
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
