@@ -6,8 +6,9 @@
       <app-input-clientes autocomplete="email" icon="mail-outline" [control]="form.controls.email" type="email"
         label="Correo">
       </app-input-clientes>
+
       <!--          Email con validaciones         -->
-      <!--El mensjae se mostrara cuando el email tenga un error o toco el input-->
+      <!--El mensaje se mostrara cuando el email tenga un error o toco el input-->
       <div class="msj-validacion" *ngIf="form.controls.email.errors && form.controls.email.touched">
         <!--Aqui decimos que tipo de error es, en nuestro caso son dos (ver en ts)-->
         <div *ngIf="form.controls.email.errors?.['required']">El correo es requerido</div>
@@ -15,6 +16,7 @@
       </div>
       <app-input-clientes [control]="form.controls.contrasena" icon="lock-closed-outline" type="password"
         label="Contrasena"></app-input-clientes>
+
       <!--              Contraseña y su validacion           -->
       <div class="msj-validacion" *ngIf="form.controls.contrasena.errors && form.controls.contrasena.touched">
         <div *ngIf="form.controls.contrasena.errors?.['required']">El contraseña es requerida</div>

@@ -3,6 +3,7 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
 import { User } from 'src/app/models/user.model';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 
 @Component({
   selector: 'app-contrasena-olvidada',
@@ -11,7 +12,7 @@ import { User } from 'src/app/models/user.model';
 })
 export class ContrasenaOlvidadaPage implements OnInit {
 
-  constructor() { }
+  constructor(private emailComposer: EmailComposer) { }
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -95,4 +96,38 @@ export class ContrasenaOlvidadaPage implements OnInit {
     }
   }
 
+  async enviarEmail() {
+    const email = this.form.value.email;
+    const nuevaContrasena = this.form.value.contrasena;
+  
+    const emailOptions = {
+      to: email,
+      subject: 'Recuperación de Contraseña',
+      body: `Hola,<br><br>Tu nueva contraseña es: <strong>${nuevaContrasena}</strong><br><br>Por favor, cámbiala después de iniciar sesión.`,
+      isHtml: true,
+    };
+  
+    this.emailComposer.isAvailable().then((available: boolean) => {
+      if (available) {
+        this.emailComposer.open(emailOptions);
+      } else {
+        console.error('El cliente de correo no está disponible.');
+        this.utilsSvc.presentToast({
+          message: "No se pudo enviar el correo. Asegúrate de tener configurado un cliente de correo.",
+          duration: 2500,
+          color: 'danger',
+          position: 'bottom',
+        });
+      }
+    }).catch(error => {
+      console.error('Error al verificar el cliente de correo:', error);
+      this.utilsSvc.presentToast({
+        message: "Ocurrió un error al intentar enviar el correo.",
+        duration: 2500,
+        color: 'danger',
+        position: 'bottom',
+      });
+    });
+  }
+  
 }
