@@ -15,7 +15,7 @@
       <div class="msj-validacion" *ngIf="form.controls.name.errors && form.controls.name.touched">
         <!--Aqui decimos que tipo de error es, en nuestro casoi son dos (ver en ts)-->
         <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
-        <div *ngIf="form.controls.name.errors?.['minLenght']">AL menos debe tener 4 caracteres</div>
+        <div *ngIf="form.controls.name.errors?.['minLenght']">Al menos debe tener 4 caracteres</div>
       </div>
       <!--          Email con validaciones         -->
       <app-input-clientes autocomplete="email" icon="mail-outline" [control]="form.controls.email" type="email"

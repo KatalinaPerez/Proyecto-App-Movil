@@ -7,9 +7,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 
-
-import { HttpClient } from '@angular/common/http';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,17 +22,9 @@ export class FirebaseService {
     return getAuth();
   }
   //Entrar a la app
-  signIn(email: string, password: string) {
-    return this.http.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDhx4nEiQVRY7U6K_xBgNOSWlaUx4N_knY`,
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      }
-    );
+  signIn(user: User) {
+    return signInWithEmailAndPassword(getAuth(), user.email, user.contrasena);
   }
-  
   //Registrarse
   signUp(user: User) {
     return createUserWithEmailAndPassword(getAuth(), user.email, user.contrasena);
