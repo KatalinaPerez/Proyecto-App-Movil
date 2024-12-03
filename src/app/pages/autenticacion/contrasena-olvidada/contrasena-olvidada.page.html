@@ -1,6 +1,8 @@
-<app-header backButtom="/autenticacion" titulo="Recuperación Contraseña" class="dark-theme"></app-header>
+<app-header backButtom="/autenticacion" titulo="Recuperación Contraseña"></app-header>
 
 <ion-content [fullscreen]="true" class="dark-theme">
+
+  <p class="ion-text-center"> Te enviaremos un correo para <br> que cambies tu contraseña 🙌🏽</p>
   <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()">
     <ion-card class="dark-theme">
       <app-input-clientes autocomplete="email" icon="mail-outline" [control]="form.controls.email" type="email"
@@ -11,13 +13,6 @@
         <!--Aqui decimos que tipo de error es, en nuestro caso son dos (ver en ts)-->
         <div *ngIf="form.controls.email.errors?.['required']">El correo es requerido</div>
         <div *ngIf="form.controls.email.errors?.['email']">Ingrese correo válido</div>
-      </div>
-      
-      <app-input-clientes [control]="form.controls.contrasena" icon="lock-closed-outline" type="password"
-        label="Contrasena"></app-input-clientes>
-      <!--              Contraseña y su validacion           -->
-      <div class="msj-validacion" *ngIf="form.controls.contrasena.errors && form.controls.contrasena.touched">
-        <div *ngIf="form.controls.contrasena.errors?.['required']">El contraseña es requerida</div>
       </div>
 
       <ion-item>

@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
-import { User } from 'src/app/models/user.model';
 
 import * as emailjs from '@emailjs/browser';
 
@@ -18,17 +19,64 @@ export class ContrasenaOlvidadaPage implements OnInit {
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    contrasena: new FormControl('', [Validators.required]),
-  });
+  })
 
   firabaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   async submit() {
     if (this.form.valid) {
-      await this.enviarEmail();
+
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      this.firabaseSvc.recoverPassEmail(this.form.value.email).then(res => {
+
+        this.utilsSvc.presentToast({
+          message: "Correo enviado con éxito",
+          duration: 1500,
+          color: 'tertiary',
+          position: 'middle',
+          icon: 'mail-outline'
+
+        });
+
+        this.utilsSvc.routerLink('/autenticacion');
+        this.form.reset();
+        
+      }).catch(error => {
+        console.log(error);
+
+        this.utilsSvc.presentToast({
+          message: "El usuario o la contraseña es inválido, porfavor vuelva a ingresar",
+          duration: 2500,
+          color: 'tertiary',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+
+        })
+
+
+      })//al obtener respuesta el loading debe desaparecer:
+        .finally(() => {
+          loading.dismiss();
+        })
+    }
+  }
+
+
+}
+
+
+  
+
+  /*async submit() {
+    if (this.form.valid) {
+      /*await this.enviarEmail();
     } else {
       this.utilsSvc.presentToast({
         message: 'Por favor completa el formulario correctamente.',
@@ -107,6 +155,5 @@ export class ContrasenaOlvidadaPage implements OnInit {
         position: 'top',
       });
     }
-  }
+  }*/
   
-}
