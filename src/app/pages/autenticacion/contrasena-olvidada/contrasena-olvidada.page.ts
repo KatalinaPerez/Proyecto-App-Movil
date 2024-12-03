@@ -3,21 +3,17 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
 import { User } from 'src/app/models/user.model';
-//import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
-import { EmailJSResponseStatus } from '@emailjs/browser';
+
+import * as emailjs from '@emailjs/browser';
 
 @Component({
   selector: 'app-contrasena-olvidada',
   templateUrl: './contrasena-olvidada.page.html',
   styleUrls: ['./contrasena-olvidada.page.scss'],
 })
-
 export class ContrasenaOlvidadaPage implements OnInit {
-
-  private emailjsUserId = 'hCO7YABSyqikv68ru4TPg'; // Obtén este valor de tu cuenta EmailJS
-
-  constructor(public emailjs: EmailJSResponseStatus) {
-    emailjs.init();
+  constructor() {
+    emailjs.init('KMKG8WoDeil--y6Dp'); // Coloca tu User ID
   }
 
   form = new FormGroup({
@@ -32,122 +28,85 @@ export class ContrasenaOlvidadaPage implements OnInit {
 
   async submit() {
     if (this.form.valid) {
-      const loading = await this.utilsSvc.loading();
-      await loading.present();
-
-      this.firabaseSvc
-        .signIn(this.form.value as User)
-        .then((res) => {
-          this.getUserInfo(res.user.uid);
-        })
-        .catch((error) => {
-          console.log(error);
-
-          this.utilsSvc.presentToast({
-            message:
-              'El usuario o la contraseña es inválido, porfavor vuelva a ingresar',
-            duration: 2500,
-            color: 'tertiary',
-            position: 'middle',
-            icon: 'alert-circle-outline',
-          });
-        }) //al obtener respuesta el loading debe desaparecer:
-        .finally(() => {
-          loading.dismiss();
-        });
-    }
-  }
-
-  async getUserInfo(uid: string) {
-    if (this.form.valid) {
-      const loading = await this.utilsSvc.loading();
-      await loading.present();
-
-      let path = `users/${uid}`;
-
-      this.firabaseSvc
-        .getDocumento(path)
-        .then((user: User) => {
-          this.utilsSvc.saveLocal('users', user);
-          this.utilsSvc.routerLink('/main/home');
-          this.form.reset();
-
-          this.utilsSvc.presentToast({
-            message: `Bienvenid@ ${user.name}`,
-            duration: 1500,
-            color: 'tertiary',
-            position: 'middle',
-            icon: 'person-circle-outline',
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-
-          this.utilsSvc.presentToast({
-            message:
-              'El usuario o la contraseña es inválido, porfavor vuelva a ingresar',
-            duration: 2500,
-            color: 'tertiary',
-            position: 'middle',
-            icon: 'alert-circle-outline',
-          });
-        }) //al obtener respuesta el loading debe desaparecer:
-        .finally(() => {
-          loading.dismiss();
-        });
-    }
-  }
-  async enviarEmail(email: string, resetLink: string): Promise<void> {
-    const templateParams = {
-      to_email: email,
-      reset_link: resetLink, // Genera un enlace único para el cambio de contraseña
-    };
-
-    return emailjs
-      .send('service_7a86y8k', 'template_eseb5rl', templateParams)
-      .then((response) => {
-        console.log(
-          'Email enviado exitosamente',
-          response.status,
-          response.text
-        );
-      })
-      .catch((error) => {
-        console.error('Error al enviar el email', error);
+      await this.enviarEmail();
+    } else {
+      this.utilsSvc.presentToast({
+        message: 'Por favor completa el formulario correctamente.',
+        duration: 2500,
+        color: 'warning',
+        position: 'top',
       });
+    }
   }
-}
 
-/*async enviarEmail() {
-    const email = this.form.value.email;
-    const nuevaContrasena = this.form.value.contrasena;
+  async enviarEmail() {
+    if (this.form.valid) {
+      const email = this.form.value.email;
+      const nuevaContrasena = this.form.value.contrasena;
   
-    const emailOptions = {
-      to: email,
-      subject: 'Recuperación de Contraseña',
-      body: `Hola,<br><br>Tu nueva contraseña es: <strong>${nuevaContrasena}</strong><br><br>Por favor, cámbiala después de iniciar sesión.`,
-      isHtml: true,
-    };
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
   
-    this.emailComposer.isAvailable().then((available: boolean) => {
-      if (available) {
-        this.emailComposer.open(emailOptions);
-      } else {
-        console.error('El cliente de correo no está disponible.');
+      try {
+        // Buscar usuario en Firebase por email
+        const userDoc = await this.firabaseSvc.getUserByEmail(email);
+        if (!userDoc) {
+          throw new Error('No se encontró un usuario con este correo.');
+        }
+  
+        // Obtener UID del usuario
+        const uid = userDoc.uid;
+  
+        // Actualizar la contraseña en la base de datos
+        const userPath = `users/${uid}`;
+        await this.firabaseSvc.updateDocumento(userPath, { contrasena: nuevaContrasena });
+  
+        // Obtener el nombre del usuario para personalizar el correo
+        const userInfo = await this.firabaseSvc.getDocumento(userPath);
+        const userName = userInfo?.['name'] || 'Usuario';
+  
+        // Enviar el correo con EmailJS
+        const templateParams = {
+          to_email: email,
+          new_password: nuevaContrasena,
+          name: userName,
+        };
+  
+        await emailjs.send('service_7a86y8k', 'template_eseb5rl', templateParams);
+        console.log('Correo enviado exitosamente');
+  
+        // Mostrar mensaje de éxito
         this.utilsSvc.presentToast({
-          message: "No se pudo enviar el correo. Asegúrate de tener configurado un cliente de correo.",
+          message: 'Contraseña actualizada y correo enviado correctamente.',
+          duration: 2000,
+          color: 'success',
+          position: 'top',
+        });
+  
+        // Resetear el formulario
+        this.form.reset();
+  
+      } catch (error) {
+        console.error('Error al actualizar la contraseña:', error);
+  
+        // Mostrar mensaje de error
+        this.utilsSvc.presentToast({
+          message: 'Ocurrió un error al actualizar la contraseña. Intenta nuevamente.',
           duration: 2500,
           color: 'danger',
-          position: 'bottom',
+          position: 'top',
         });
+      } finally {
+        loading.dismiss();
       }
-    }).catch(error => {
-      console.error('Error al verificar el cliente de correo:', error);
+    } else {
       this.utilsSvc.presentToast({
-        message: "Ocurrió un error al intentar enviar el correo.",
+        message: 'Por favor completa el formulario correctamente.',
         duration: 2500,
-        color: 'danger',
-        position: 'bottom',
+        color: 'warning',
+        position: 'top',
       });
-    });
-  }*/
+    }
+  }
+  
+}

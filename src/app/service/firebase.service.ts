@@ -7,10 +7,14 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 
+import { query, where, getDocs, collection } from '@angular/fire/firestore';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+
+  constructor(private firestore: AngularFirestore) {}
   
   //variables con instancias de distintos servicios que me permiten validar
   auth = inject(AngularFireAuth);
@@ -48,8 +52,38 @@ export class FirebaseService {
   }
 
   //Obtencion de datos de usuario
-  async getDocumento (path:string) {
-    return (await getDoc(doc(getFirestore(), path))).data();
+  async getDocumento(path: string): Promise<User> {
+    const docSnap = await getDoc(doc(getFirestore(), path));
+    return docSnap.exists() ? (docSnap.data() as User) : null;
   }
 
+  async getUserByEmail(email: string) {
+    const firestore = getFirestore();
+    const usersCollection = collection(firestore, 'users');
+    const q = query(usersCollection, where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+  
+    if (!querySnapshot.empty) {
+      // Retorna el primer documento que coincide
+      const doc = querySnapshot.docs[0];
+      return { uid: doc.id, ...doc.data() }; // Incluye UID en los datos
+    } else {
+      throw new Error('No se encontró un usuario con este correo.');
+    }
+  }
+
+  /*async updateDocumento(path: string, data: any): Promise<void> {
+    const docRef = this.firebase.doc(path);
+    return docRef.update(data);
+  }*/
+
+  async updateDocumento(path: string, data: any): Promise<void> {
+    try {
+      await this.firestore.doc(path).update(data);
+      console.log(`Documento en la ruta "${path}" actualizado correctamente.`);
+    } catch (error) {
+      console.error(`Error al actualizar el documento en la ruta "${path}":`, error);
+      throw error; // Lanzar el error para manejarlo en los métodos que llamen esta función
+    }
+  }
 }
