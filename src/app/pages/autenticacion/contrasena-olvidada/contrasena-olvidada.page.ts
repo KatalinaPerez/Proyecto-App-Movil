@@ -56,7 +56,7 @@ export class ContrasenaOlvidadaPage implements OnInit {
     }
   }
 
-  async enviarEmail() {
+  /*async enviarEmail() {
     if (this.form.valid) {
       const email = this.form.value.email;
   
@@ -121,6 +121,6 @@ export class ContrasenaOlvidadaPage implements OnInit {
         position: 'top',
       });
     }
-  }
+  }*/
   
 }

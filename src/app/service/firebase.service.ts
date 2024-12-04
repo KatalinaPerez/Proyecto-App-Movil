@@ -63,7 +63,7 @@ export class FirebaseService {
     return docSnap.exists() ? (docSnap.data() as User) : null;
   }
 
-  /* Busca un usuario en la base de datos por su correo.*/
+  /* Busca un usuario en la base de datos por su correo.
   async getUserByEmail(email: string) {
     const firestore = getFirestore();
     const usersCollection = collection(firestore, 'users');
@@ -76,7 +76,7 @@ export class FirebaseService {
     } else {
       throw new Error('No se encontró un usuario con este correo.');
     }
-  }
+  }*/
 
   /* Actualiza un documento existente en una ruta específica.*/
   async updateDocumento(path: string, data: any): Promise<void> {
@@ -90,6 +90,18 @@ export class FirebaseService {
   }
   async sendPassEmail(email: string){
     return sendPasswordResetEmail(getAuth(), email);
+  }
+
+  /* Obtiene correo de la sesion iniciada */
+  async getCurrentUser() {
+    return new Promise((resolve, reject) => {
+      this.auth.onAuthStateChanged(
+        (user) => {
+          resolve(user); // Devuelve el usuario actual cuando cambia el estado
+        },
+        (error) => reject(error) // Rechaza la promesa si hay un error
+      );
+    });
   }
 
   // ::::::::::::::::::::: CANCIONES :::::::::::::::::::::
