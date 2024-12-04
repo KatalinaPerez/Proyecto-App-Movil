@@ -62,4 +62,6 @@ export class CancionPage implements OnInit {
     const audio = new Audio(audioUrl);
     audio.play();
   }
+
+  
 }

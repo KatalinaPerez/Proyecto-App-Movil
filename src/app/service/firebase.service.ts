@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -87,6 +87,9 @@ export class FirebaseService {
       console.error(`Error al actualizar el documento en la ruta "${path}":`, error);
       throw error; // Lanzar el error para manejarlo en los métodos que llamen esta función
     }
+  }
+  async sendPassEmail(email: string){
+    return sendPasswordResetEmail(getAuth(), email);
   }
 
   // ::::::::::::::::::::: CANCIONES :::::::::::::::::::::
