@@ -8,12 +8,31 @@
       <ion-card-subtitle>{{ trackArtist }}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
-  
-  <!-- Botón de reproducción -->
-   <div class="audio-container">
-      <audio controls>
-        <source src={{previewUrl}} type="audio/mpeg">
-      </audio>
-   </div>
 
+  <!-- Reproductor de audio -->
+  <div class="audio-container">
+    <audio controls>
+      <source src={{previewUrl}} type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Mostrar rating promedio -->
+  <div class="rating-display">
+    <p><strong>Promedio de Rating:</strong> {{ averageRating | number: '1.1-2' }}</p>
+  </div>
+
+  <!-- Calificación con estrellas -->
+  <div class="star-rating">
+    <ion-icon 
+      *ngFor="let star of stars; let i = index"
+      [name]="i < userRating ? 'star' : 'star-outline'"
+      (click)="setRating(i + 1)"
+      style="font-size: 36px; cursor: pointer;">
+    </ion-icon>
+  </div>
+
+  <!-- Contenedor que envuelve el botón para centrarlo -->
+  <div class="submit-button-container">
+    <button (click)="submitRating()" class="submit-button">Enviar Calificación</button>
+  </div>
 </ion-content>
