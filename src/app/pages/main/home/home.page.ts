@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ApiSpotifyService } from '../../../service/api-spotify.service'
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 @Component({
@@ -62,7 +62,8 @@ export class HomePage implements OnInit {
             trackName: track.data.name,
             trackArtist: this.getArtists(track.data.artists.items),
             trackCover: track.data.albumOfTrack.coverArt.sources[2].url,
-            previewUrl: previewUrl // Ahora esto tendrá el valor correcto
+            previewUrl: previewUrl,
+            cancionId: track.data.id
           }
         } 
       );
