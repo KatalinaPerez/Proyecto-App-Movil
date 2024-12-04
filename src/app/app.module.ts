@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule  } from '@angular/common/http';
 
 // ::::::: Firebase :::::::::
 import { AngularFireModule } from '@angular/fire/compat';
