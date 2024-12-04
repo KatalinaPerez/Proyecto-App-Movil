@@ -51,22 +51,23 @@ export class HomePage implements OnInit {
         }
       );
     });
-}
+  }
 
 //Funcion para abrir la pagina donde se vera la cancion
   openCancion(track: any) {
     this.getPreviewUrl(track.data.id).subscribe(previewUrl => {
-      this.router.navigate(['/cancion'],
-        {
+      this.getLyrics(track.data.id).subscribe(lyrics => {
+        this.router.navigate(['/cancion'], {
           queryParams: {
             trackName: track.data.name,
             trackArtist: this.getArtists(track.data.artists.items),
             trackCover: track.data.albumOfTrack.coverArt.sources[2].url,
             previewUrl: previewUrl,
-            cancionId: track.data.id
+            cancionId: track.data.id,
+            lyrics: lyrics // Letras completas
           }
-        } 
-      );
+        });
+      });
     });
   }
 
@@ -87,11 +88,23 @@ export class HomePage implements OnInit {
   getArtists(artists: any[]): string {
     return artists.map(artist => artist.profile.name).join(', ');
   }
-  cards = [
-    { type: 'album', title: 'Chemtrails Over The Country Club', image: 'assets/imagenes/COCC-Lana-Del-Rey.jpg', artist: 'Lana del Rey' },
-    { type: 'album', title: 'Born To Die', image: 'assets/imagenes/Lana-Del-Rey-Born-To-Die-album.jpg', artist: 'Lana del Rey' },
-    { type: 'album', title: 'Honeymoon', image: 'assets/imagenes/lana-del-rey-honeymoon.jpg', artist: 'Lana del Rey' },
-    { type: 'album', title: 'Lust For Life', image: 'assets/imagenes/LANA-DEL-REY-LustForLife.jpeg', artist: 'Lana del Rey' },
-    { type: 'album', title: 'Norman Fucking Rockwell', image: 'assets/imagenes/NFR-Lana-Del_Rey.webp', artist: 'Lana del Rey' },
-  ];
+
+  getLyrics(trackId: string): Observable<string> {
+    return this.spotifyService.getTrakLyrycs(trackId).pipe(
+      map(response => {
+        // Asegurarse de que existan líneas
+        const lines = response.lyrics?.lines || [];
+        
+        // Extraer y concatenar las palabras (words) de cada línea
+        const fullLyrics = lines.map(line => line.words).join('\n');
+  
+        console.log('Full Lyrics:', fullLyrics); // Para depuración
+        return fullLyrics; // Devuelve las letras completas
+      }),
+      catchError(error => {
+        console.error('Error obteniendo las letras:', error);
+        return of('Letras no disponibles'); // Mensaje en caso de error
+      })
+    );
+  }
 }

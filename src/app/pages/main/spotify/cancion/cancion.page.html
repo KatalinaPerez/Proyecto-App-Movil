@@ -44,5 +44,14 @@
   <div class="submit-button-container">
     <button (click)="submitRating()" class="submit-button">Enviar Calificación</button>
   </div>
+
+  <!-- Mostrar letras de la canción -->
+  <div class="lyrics-container">
+    <h3>Letras de la Canción:</h3>
+    <p *ngIf="lyrics; else noLyrics">{{ lyrics }}</p>
+    <ng-template #noLyrics>
+      <p><em>Letras no disponibles para esta canción.</em></p>
+    </ng-template>
+  </div>
   
 </ion-content>

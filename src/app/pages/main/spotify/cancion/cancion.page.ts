@@ -32,6 +32,7 @@ export class CancionPage implements OnInit {
 
   firabaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
+  lyrics: string = ''; // Variable para almacenar las letras
 
   async ngOnInit() {
     // Obtenemos los parámetros de la URL
@@ -41,6 +42,7 @@ export class CancionPage implements OnInit {
       this.trackCover = params['trackCover'];
       this.previewUrl = params['previewUrl'];
       this.cancionId = params['cancionId'];
+      this.lyrics = params['lyrics']; 
     });
 
     // Obtenemos el rating promedio de la canción
