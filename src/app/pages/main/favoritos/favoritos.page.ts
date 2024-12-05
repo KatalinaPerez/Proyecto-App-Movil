@@ -18,7 +18,7 @@ export class FavoritosPage implements OnInit {
   openCancion(track: any) {
     const trackArtists = track.data.artists?.items || []; // Usa un arreglo vacío si items no está definido
     const artistNames = trackArtists.map((artist: any) => artist.profile.name).join(', ');
-    this.router.navigate(['/cancion'], {
+    this.router.navigate(['/fav-cancion'], {
       queryParams: {
         trackName: track.data.name,
         trackArtist: track.data.artists.items.map((artist: any) => artist.profile.name).join(', '),

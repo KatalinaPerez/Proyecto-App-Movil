@@ -31,7 +31,11 @@ const routes: Routes = [
   {
     path: 'favoritos',
     loadChildren: () => import('./favoritos/favoritos.module').then( m => m.FavoritosPageModule)
+  },  {
+    path: 'fav-cancion',
+    loadChildren: () => import('./fav-cancion/fav-cancion.module').then( m => m.FavCancionPageModule)
   }
+
 ];
 
 @NgModule({
