@@ -1,0 +1,24 @@
+<app-header backButtom="/main/home" titulo="Favoritos"></app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngIf="favoritos.length > 0">
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let track of favoritos">
+        <ion-card (click)="openCancion(track)" class="card-search-container">
+          <img [src]="getTrackImageUrl(track)" alt="Album Art" class="album-art">
+          <ion-card-header>
+            <ion-card-title>{{ track.data.name }}</ion-card-title>
+            <ion-card-subtitle>{{ getArtistNames(track.data.artists.items) }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="favoritos.length === 0">
+      <ion-col>
+        <ion-card>
+          <ion-card-content>No hay canciones en favoritos.</ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

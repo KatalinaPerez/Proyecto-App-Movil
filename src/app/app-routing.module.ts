@@ -40,6 +40,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/autenticacion/registro/registro.module').then( m => m.RegistroPageModule),
     canActivate:[noAuthGuard]
   },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./pages/main/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
+  },
   { path: 'cancion', component: CancionPage },
   {
     path: 'e404',

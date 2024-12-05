@@ -11,7 +11,17 @@
           <ion-card-subtitle>{{ trackArtist }}</ion-card-subtitle>
         </div>
         <div class="icons">
-          <ion-icon name="heart-outline" class="icon"></ion-icon>
+          <ion-icon [name]="isFavorito({ data: { id: cancionId } }) ? 'heart' : 'heart-outline'" class="icon" (click)="toggleFavorito({
+              data: {
+                id: cancionId,
+                name: trackName,
+                artists: { items: [{ profile: { name: trackArtist } }] },
+                albumOfTrack: { coverArt: { sources: [{}, {}, { url: trackCover }] } },
+              },
+              preview_url: previewUrl
+            })">
+          </ion-icon>
+
           <ion-icon name="share-social-outline" (click)="enviarSongEmail()" class="icon"></ion-icon>
         </div>
       </div>
@@ -32,11 +42,8 @@
 
   <!-- Calificación con estrellas -->
   <div class="star-rating">
-    <ion-icon 
-      *ngFor="let star of stars; let i = index"
-      [name]="i < userRating ? 'star' : 'star-outline'"
-      (click)="setRating(i + 1)"
-      style="font-size: 36px; cursor: pointer;">
+    <ion-icon *ngFor="let star of stars; let i = index" [name]="i < userRating ? 'star' : 'star-outline'"
+      (click)="setRating(i + 1)" style="font-size: 36px; cursor: pointer;">
     </ion-icon>
   </div>
 
@@ -53,5 +60,4 @@
       <p><em>Letras no disponibles para esta canción.</em></p>
     </ng-template>
   </div>
-  
 </ion-content>
