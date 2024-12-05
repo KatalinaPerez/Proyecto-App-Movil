@@ -4,7 +4,6 @@ import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
 import { User } from 'firebase/auth'; // Importa el tipo User desde Firebase
 
-
 import * as emailjs from '@emailjs/browser';
 
 @Component({
@@ -22,6 +21,7 @@ export class CancionPage implements OnInit {
   ratings: any[] = [];
   userRating: number = 0; // Valor de la calificación seleccionada por el usuario
   stars: boolean[] = [false, false, false, false, false]; // Representación de las estrellas (5 estrellas)
+  favoritos: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -42,8 +42,11 @@ export class CancionPage implements OnInit {
       this.trackCover = params['trackCover'];
       this.previewUrl = params['previewUrl'];
       this.cancionId = params['cancionId'];
-      this.lyrics = params['lyrics']; 
+      this.lyrics = params['lyrics'];
     });
+
+    // Cargar favoritos desde localStorage
+    this.loadFavoritos();
 
     // Obtenemos el rating promedio de la canción
     this.averageRating = await this.firebaseService.getSongAverage(
@@ -79,11 +82,34 @@ export class CancionPage implements OnInit {
     audio.play();
   }
 
+  //Funciones favoritos
+  toggleFavorito(track: any) {
+    const isFavorito = this.isFavorito(track);
+    if (isFavorito) {
+      this.favoritos = this.favoritos.filter(
+        (fav) => fav.data.id !== track.data.id
+      );
+    } else {
+      this.favoritos.push(track);
+    }
+    console.log('Favoritos guardados:', this.favoritos);
+    localStorage.setItem('favoritos', JSON.stringify(this.favoritos));
+  }
+
+  isFavorito(track: any): boolean {
+    return this.favoritos.some((fav) => fav.data.id === track.data.id);
+  }
+
+  loadFavoritos() {
+    const storedFavoritos = localStorage.getItem('favoritos');
+    this.favoritos = storedFavoritos ? JSON.parse(storedFavoritos) : [];
+  }
+
   async enviarSongEmail() {
     try {
       const currentUser = (await this.firebaseService.getCurrentUser()) as User; // Asegura que currentUser es de tipo User
       const userEmail = currentUser?.email;
-  
+
       if (!userEmail) {
         throw new Error('No se pudo obtener el correo del usuario.');
       }
@@ -98,7 +124,7 @@ export class CancionPage implements OnInit {
         to_email: userEmail, // Cambia por un input o valor dinámico si es necesario
         song_name: songName,
         song_rating: songRating,
-        song_artist: songArtist
+        song_artist: songArtist,
       };
 
       // Enviar correo con EmailJS

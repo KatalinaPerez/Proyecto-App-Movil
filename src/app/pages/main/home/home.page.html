@@ -1,19 +1,20 @@
 <ion-menu contentId="main-content" class="dark-theme">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu Content</ion-title>
+      <ion-title> Menu </ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding dark-theme"> 
-    Perfil
-    <p (click)="signOut()" >Cerrar sesión</p>
-    <p routerLink="/kjkshdjks" >Error 404</p>
+    <ion-icon class="avatar-icon" name="person-circle-outline"></ion-icon><br>
+    <p routerLink="/main/favoritos" >Favoritos</p>
+    <p (click)="signOut()">Cerrar sesión</p>
+    <p routerLink="/kjkshdjks">Error 404</p>
   </ion-content>
 </ion-menu>
 
 <div class="ion-page dark-theme" id="main-content">
   <app-header [titulo]="'Menu'" [showMenuButton]="true"></app-header>
-  <!-- nuevo -->
+  <!--nuevo-->
   <ion-content>
     <!-- Input para escribir el nombre de la canción -->
     <ion-item>
