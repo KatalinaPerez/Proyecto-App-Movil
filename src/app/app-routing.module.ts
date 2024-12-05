@@ -44,6 +44,13 @@ const routes: Routes = [
     path: 'favoritos',
     loadChildren: () => import('./pages/main/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
   },
+  /*{
+    path: 'fav-cancion',
+    loadChildren: () =>
+      import('.pages/main/fav-cancion/fav-cancion.module').then(
+        (m) => m.FavCancionPageModule
+      ),
+  },*/
   { path: 'cancion', component: CancionPage },
   {
     path: 'e404',
