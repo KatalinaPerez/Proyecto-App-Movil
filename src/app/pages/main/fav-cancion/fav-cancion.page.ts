@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from 'src/app/service/firebase.service';
 import { UtilsService } from 'src/app/service/utils.service';
-import { User } from 'src/app/models/user.model'; 
+import { User } from 'src/app/models/user.model';
 
 import * as emailjs from '@emailjs/browser';
 @Component({
@@ -10,7 +10,6 @@ import * as emailjs from '@emailjs/browser';
   templateUrl: './fav-cancion.page.html',
   styleUrls: ['./fav-cancion.page.scss'],
 })
-
 export class FavCancionPage implements OnInit {
   trackName: string;
   trackArtist: string;
@@ -22,11 +21,12 @@ export class FavCancionPage implements OnInit {
   userRating: number = 0; // Valor de la calificación seleccionada por el usuario
   stars: boolean[] = [false, false, false, false, false]; // Representación de las estrellas (5 estrellas)
   favoritos: any[] = [];
-  
+
   constructor(
-    private route: ActivatedRoute, 
-    private firebaseService: FirebaseService
-  ){
+    private route: ActivatedRoute,
+    private firebaseService: FirebaseService,
+    private router: Router
+  ) {
     emailjs.init('KMKG8WoDeil--y6Dp'); // Coloca tu User ID
   }
   firabaseSvc = inject(FirebaseService);
@@ -42,6 +42,10 @@ export class FavCancionPage implements OnInit {
       this.cancionId = params['cancionId'];
       this.lyrics = params['lyrics'];
     });
+
+    // Cargar favoritos del almacenamiento local
+    const favoritosGuardados = localStorage.getItem('favoritos');
+    this.favoritos = favoritosGuardados ? JSON.parse(favoritosGuardados) : [];
 
     // Obtenemos el rating promedio de la canción
     this.averageRating = await this.firebaseService.getSongAverage(
@@ -76,7 +80,11 @@ export class FavCancionPage implements OnInit {
     audio.play();
   }
 
+  //Funciones favoritos
+
   async enviarSongEmail() {
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
     try {
       const currentUser = (await this.firebaseService.getCurrentUser()) as User; // Asegura que currentUser es de tipo User
       const userEmail = currentUser?.email;
@@ -121,8 +129,8 @@ export class FavCancionPage implements OnInit {
         color: 'danger',
         position: 'top',
       });
+    } finally {
+      loading.dismiss();
     }
   }
-
 }
-

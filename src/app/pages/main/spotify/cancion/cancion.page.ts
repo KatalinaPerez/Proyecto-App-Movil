@@ -106,6 +106,8 @@ export class CancionPage implements OnInit {
   }
 
   async enviarSongEmail() {
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
     try {
       const currentUser = (await this.firebaseService.getCurrentUser()) as User; // Asegura que currentUser es de tipo User
       const userEmail = currentUser?.email;
@@ -150,6 +152,8 @@ export class CancionPage implements OnInit {
         color: 'danger',
         position: 'top',
       });
+    } finally {
+      loading.dismiss();
     }
   }
 }
