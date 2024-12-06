@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FavoritosPageRoutingModule } from './favoritos-routing.module';
+import { FavCancionPageRoutingModule } from './fav-cancion-routing.module';
 
-import { FavoritosPage } from './favoritos.page';
+import { FavCancionPage } from './fav-cancion.page';
 import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
 
 @NgModule({
@@ -14,14 +14,9 @@ import { CompartidosModule } from 'src/app/compartidos/compartidos.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    FavoritosPageRoutingModule,
-    CompartidosModule,
+    FavCancionPageRoutingModule,
     CompartidosModule
   ],
-  declarations: [FavoritosPage]
+  declarations: [FavCancionPage]
 })
-export class FavoritosPageModule {}
-
-
-
-
+export class FavCancionPageModule {}

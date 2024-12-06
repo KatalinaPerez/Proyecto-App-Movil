@@ -1,0 +1,54 @@
+<app-header backButtom="/main/home" titulo="{{ trackName }}"></app-header>
+
+<ion-content>
+  <ion-card>
+    <img [src]="trackCover" alt="Album Art">
+    <ion-card-header>
+      <!-- Contenedor para el título y los íconos -->
+      <div class="title-icons-container">
+        <div>
+          <ion-card-title>{{ trackName }}</ion-card-title>
+          <ion-card-subtitle>{{ trackArtist }}</ion-card-subtitle>
+        </div>
+        <div class="icons">
+          <ion-icon name="share-social-outline" (click)="enviarSongEmail()" class="icon"></ion-icon>
+        </div>
+      </div>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- Reproductor de audio -->
+  <div class="audio-container">
+    <audio controls>
+      <source src={{previewUrl}} type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Mostrar rating promedio -->
+  <div class="rating-display">
+    <p><strong>Promedio de Rating:</strong> {{ averageRating | number: '1.1-2' }}</p>
+  </div>
+
+  <!-- Calificación con estrellas -->
+  <div class="star-rating">
+    <ion-icon *ngFor="let star of stars; let i = index" [name]="i < userRating ? 'star' : 'star-outline'"
+      (click)="setRating(i + 1)" style="font-size: 36px; cursor: pointer;">
+    </ion-icon>
+  </div>
+
+  <!-- Contenedor que envuelve el botón para centrarlo -->
+  <div class="submit-button-container">
+    <button (click)="submitRating()" class="submit-button">Enviar Calificación</button>
+  </div>
+
+  <!-- Mostrar letras de la canción -->
+  <div class="lyrics-container">
+    <h3>Letras de la Canción:</h3>
+    <p *ngIf="lyrics; else noLyrics">{{ lyrics }}</p>
+    <ng-template #noLyrics>
+      <p><em>Letras no disponibles para esta canción.</em></p>
+    </ng-template>
+  </div>
+
+
+</ion-content>
