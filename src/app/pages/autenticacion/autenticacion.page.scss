@@ -1,22 +1,60 @@
+/* Animación de botones con gradiente */
 .animated-button {
-    background: linear-gradient(270deg, #c51111, #8e44ad, #adb659, #13abb6); 
-    background-size: 800% 800%;
-    color: #ffffff; /* Letras blancas */
-    border: none; /* Sin borde */
-    animation: gradientAnimation 8s ease infinite; /* Animación de 8 segundos */
-    --background: none; /* Elimina cualquier fondo sólido predeterminado */
+  background: linear-gradient(270deg, #c51111, #8e44ad, #adb659, #13abb6);
+  background-size: 800% 800%;
+  color: #ffffff; /* Letras blancas */
+  border: none; /* Elimina el borde por defecto */
+  padding: 8px 12px; /* Reducción del padding para hacer el botón más pequeño */
+  border-radius: 8px; /* Bordes redondeados */
+  animation: gradientAnimation 8s ease infinite; /* Animación de gradiente */
+  --background: none; /* Elimina cualquier fondo sólido predeterminado */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto de transición */
+  font-size: 14px; /* Tamaño de texto más pequeño */
+}
 
+.animated-button:hover {
+  transform: scale(1.05); /* Efecto de ampliación en hover */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra cuando se pasa el cursor */
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  50% {
+    background-position: 100% 50%;
   }
-  
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Estilo para los mensajes de validación */
+.msj-validacion {
+  color: #e74c3c; /* Rojo suave para errores */
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+/* Estilo para los enlaces de "Olvidé la contraseña" */
+.forgot-password {
+  text-align: center;
+  color: #8e44ad;
+  font-size: 14px;
+  margin-top: 12px;
+  text-decoration: underline;
+}
+
+.forgot-password:hover {
+  color: #34495e;
+}
+
+/* Mejorar los márgenes y el padding de los items */
+ion-item {
+  margin-bottom: 12px; /* Espaciado entre los items */
+}
+
+/* Alineación de los íconos en los botones */
+ion-button ion-icon {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}

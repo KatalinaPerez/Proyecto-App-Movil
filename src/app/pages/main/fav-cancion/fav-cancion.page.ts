@@ -31,7 +31,6 @@ export class FavCancionPage implements OnInit {
   }
   firabaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
-  lyrics: string = '';
 
   async ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -40,39 +39,13 @@ export class FavCancionPage implements OnInit {
       this.trackCover = params['trackCover'];
       this.previewUrl = params['previewUrl'];
       this.cancionId = params['cancionId'];
-      this.lyrics = params['lyrics'];
     });
 
     // Cargar favoritos del almacenamiento local
     const favoritosGuardados = localStorage.getItem('favoritos');
     this.favoritos = favoritosGuardados ? JSON.parse(favoritosGuardados) : [];
-
-    // Obtenemos el rating promedio de la canción
-    this.averageRating = await this.firebaseService.getSongAverage(
-      this.cancionId
-    );
-    this.ratings = await this.firebaseService.getRatings(this.cancionId);
   }
 
-  // Establecer la calificación seleccionada por el usuario al hacer clic en una estrella
-  setRating(starIndex: number) {
-    this.userRating = starIndex; // La calificación seleccionada es el índice de la estrella + 1
-    this.stars = this.stars.map((_, index) => index < starIndex); // Actualizamos el estado de las estrellas
-  }
-
-  // Enviar la calificación y recalcular el promedio
-  async submitRating() {
-    if (this.userRating > 0) {
-      // Añadir la calificación de la canción
-      await this.firebaseService.addRating(this.cancionId, this.userRating);
-      this.averageRating = await this.firebaseService.getSongAverage(
-        this.cancionId
-      ); // Recalcular el promedio
-      this.ratings = await this.firebaseService.getRatings(this.cancionId); // Recargar las calificaciones anteriores
-    } else {
-      console.log('Por favor, seleccione una calificación.');
-    }
-  }
 
   playTrack() {
     const audioUrl = this.previewUrl; // La URL debe ser válida

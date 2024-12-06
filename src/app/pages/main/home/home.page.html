@@ -5,7 +5,6 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding dark-theme"> 
-    <ion-icon class="avatar-icon" name="person-circle-outline"></ion-icon><br>
     <p routerLink="/main/favoritos" >Favoritos</p>
     <p (click)="signOut()">Cerrar sesión</p>
     <p routerLink="/kjkshdjks">Error 404</p>
@@ -18,13 +17,13 @@
   <ion-content>
     <!-- Input para escribir el nombre de la canción -->
     <ion-item>
-      <ion-label style="padding-right: 1rem;">Buscar</ion-label>
+      <ion-label style="padding-right: 1rem;">Buscar:</ion-label>
       <ion-input #trackNameInput></ion-input>
     </ion-item>
 
     <!-- Botón para realizar la búsqueda -->
-    <ion-button expand="full" (click)="searchTrack(trackNameInput.value ? trackNameInput.value.toString() : '')">
-      Search Track
+    <ion-button class="ion-button"expand="full" (click)="searchTrack(trackNameInput.value ? trackNameInput.value.toString() : '')">
+      BUSCAR
     </ion-button>
 
     <!-- Lista de resultados de búsqueda -->

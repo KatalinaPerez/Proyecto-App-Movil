@@ -21,14 +21,6 @@ const routes: Routes = [
     loadChildren: () => import('./spotify/cancion/cancion.module').then( m => m.CancionPageModule)
   },
   {
-    path: 'album',
-    loadChildren: () => import('./spotify/album/album.module').then( m => m.AlbumPageModule)
-  },
-  {
-    path: 'artista',
-    loadChildren: () => import('./spotify/artista/artista.module').then( m => m.ArtistaPageModule)
-  },
-  {
     path: 'favoritos',
     loadChildren: () => import('./favoritos/favoritos.module').then( m => m.FavoritosPageModule)
   },
